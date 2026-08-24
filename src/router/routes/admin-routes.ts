@@ -20,6 +20,15 @@ const routes: RouteRecordRaw[] = [
           title: '工作台',
         },
       },
+      {
+        name: 'About',
+        path: 'about',
+        component: () => import('#/views/about.vue'),
+        meta: {
+          icon: 'carbon:workspace',
+          title: '工作台',
+        },
+      },
     ],
   },
 ];

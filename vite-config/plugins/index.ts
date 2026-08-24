@@ -1,4 +1,4 @@
-import createAntdvNextPlugin from "./antdv-next"
+import createComponentsPlugin from "./components"
 import createViteVueDevToolsPlugin from "./dev-tools"
 import createUnoCSSPlugin from "./unocss"
 import createVuePlugin from "./vue"
@@ -10,7 +10,7 @@ export function generateVitePlugins() {
     // unocss 原子化样式插件
     createUnoCSSPlugin(),
     // antd-next 自动导入插件
-    createAntdvNextPlugin(),
+    createComponentsPlugin(),
     // vue dev-tools 插件
     createViteVueDevToolsPlugin()
   ]

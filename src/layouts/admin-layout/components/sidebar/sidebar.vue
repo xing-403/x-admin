@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@antdv-next/icons';
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import Menu from './../menu/menu.vue'
 import { usePreferencesStore } from '#/store/modules/preferences';
-
+import SvgIcon from '#/components/SvgIcon/index.vue'
 
 const preferencesStore = usePreferencesStore()
 const collapsed = computed(() => preferencesStore.sidebar.collapsed)
@@ -17,7 +16,7 @@ const collapsed = computed(() => preferencesStore.sidebar.collapsed)
       <a-flex h-42px align="center" p-2 justify="space-baround">
         <a-button type="text" shape="circle" @click="preferencesStore.sidebar.collapsed = !collapsed">
           <template #icon>
-            <component :is="collapsed ? MenuUnfoldOutlined : MenuFoldOutlined" />
+            <SvgIcon :name="collapsed ? 'MenuUnfoldOutlined' : 'MenuFoldOutlined'" />
           </template>
         </a-button>
       </a-flex>

@@ -50,7 +50,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
 
   // extensions
