@@ -11,6 +11,20 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AApp: typeof import('antdv-next')['App']
     AButton: typeof import('antdv-next')['Button']
+    AConfigProvider: typeof import('antdv-next')['ConfigProvider']
+    AFlex: typeof import('antdv-next')['Flex']
+    AFloatBackTop: typeof import('antdv-next')['BackTop']
+    ALayout: typeof import('antdv-next')['Layout']
+    ALayoutContent: typeof import('antdv-next')['LayoutContent']
+    ALayoutFooter: typeof import('antdv-next')['LayoutFooter']
+    ALayoutHeader: typeof import('antdv-next')['LayoutHeader']
+    ALayoutSider: typeof import('antdv-next')['LayoutSider']
+    AMenu: typeof import('antdv-next')['Menu']
+    AStyleProvider: typeof import('antdv-next')['StyleProvider']
+    Page: typeof import('./../src/components/page/Page.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
