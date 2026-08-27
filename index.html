@@ -6,6 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>%VITE_APP_TITLE%</title>
     <link rel="stylesheet" href="/loading.css" />
+    <!-- 首屏渲染前读取持久化主题，立即同步 html.dark 类，
+         使 loading 部分也按主题样式显示，避免明暗闪烁(FOUC) -->
+    <script>
+      (function () {
+        try {
+          var ns = '%VITE_APP_NAMESPACE%'.trim() || 'x-admin';
+          var keys = [ns + '-preferences', 'x-admin-preferences', 'preferences'];
+          var raw = null;
+          for (var i = 0; i < keys.length; i++) {
+            raw = localStorage.getItem(keys[i]);
+            if (raw) break;
+          }
+          var mode = raw ? (JSON.parse(raw).theme || {}).mode : 'light';
+          var isDark = mode === 'dark';
+          var root = document.documentElement;
+          root.classList.toggle('dark', isDark);
+          root.dataset.theme = isDark ? 'dark' : 'light';
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="app">

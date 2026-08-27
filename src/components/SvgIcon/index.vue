@@ -24,7 +24,6 @@ const isComponent = computed(() =>  !isString(props.name) && (isObject(props.nam
 </script>
 
 <template>
-  <span class="svg-icon text-16px">
   <template v-if="isString(name)">
     <AntdIcon v-if="isAntdIcon" :component="AntdIconComponent"/>
     <img v-else-if="isRemoteIcon" :src="name" v-bind="$attrs" />
@@ -32,5 +31,4 @@ const isComponent = computed(() =>  !isString(props.name) && (isObject(props.nam
   </template>
   <component v-else-if="isComponent" :is="name" v-bind="$attrs" />
 
-  </span>
 </template>
