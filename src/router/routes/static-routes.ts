@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('#/views/login.vue'),
     meta: {
       icon: 'carbon:workspace',
-      title: '登录',
+      title: 'login',
     },
   },
 ];

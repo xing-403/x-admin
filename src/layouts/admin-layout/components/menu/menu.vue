@@ -1,27 +1,34 @@
 <script setup lang="ts">
+import type { LayoutMenuProps } from './type';
+import { useLayoutMenus } from './use-layout-menus';
 
-import type { MenuItemType } from 'antdv-next'
-import { computed } from 'vue'
-import { usePreferencesStore } from '#/store/modules/preferences';
+const props = withDefaults(defineProps<LayoutMenuProps>(), {
+  mode: 'vertical',
+});
 
-const props = withDefaults(defineProps<{
-  mode?: 'vertical' | 'horizontal'
-}>(), {
-  mode: 'vertical'
-})
-const preferencesStore = usePreferencesStore()
-const collapsed = computed(() => preferencesStore.sidebar.collapsed)
-const menuMode = computed(() => {
-  if (!collapsed.value && props.mode === 'vertical') {
-    return 'inline'
-  }
-  return props.mode
-})
-
-const items: MenuItemType[] = [
-]
-
+const {
+  collapsed,
+  handleMenuClick,
+  menuItems,
+  menuMode,
+  openKeys,
+  selectedKeys,
+} = useLayoutMenus(props);
 </script>
+
 <template>
-  <a-menu :mode="menuMode" :items="items" :inline-collapsed="collapsed" />
+  <a-menu
+    v-model:selected-keys="selectedKeys"
+    v-model:open-keys="openKeys"
+    :items="menuItems"
+    :inline-collapsed="collapsed"
+    :mode="menuMode"
+    @click="handleMenuClick"
+  >
+   <template #iconRender="item">
+      <span v-if="item?.icon" >
+        <SvgIcon :name="item.icon" />
+      </span>
+    </template>
+  </a-menu>
 </template>
