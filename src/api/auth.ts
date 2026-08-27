@@ -2,7 +2,6 @@
  * 认证相关接口（对接 RuoYi-Vue-Plus 后端）
  */
 import request from '#/utils/request';
-import { encryptRequest } from '#/utils/encrypt';
 
 /** 登录表单参数 */
 export interface LoginParams {
@@ -11,15 +10,14 @@ export interface LoginParams {
   code?: string;
   uuid?: string;
 }
-
 /** 登录成功返回 */
 export interface LoginVo {
-  accessToken: string;
-  refreshToken: string;
-  expireIn: number;
-  refreshExpireIn: number;
-  clientId: string;
+  access_token: string;
+  client_id: string;
+  refresh_expire_in: string;
+  expire_in: string;
   openid: string;
+  refresh_token: string;
   scope: string;
 }
 
@@ -48,21 +46,17 @@ export function getCode(): Promise<CaptchaVo> {
  * 登录：请求体 AES 加密、请求头 RSA 加密，走 @ApiEncrypt 通道。
  */
 export function login(data: LoginParams): Promise<LoginVo> {
-  const { body, encryptKey } = encryptRequest({
-    username: data.username,
-    password: data.password,
-    code: data.code ?? '',
-    uuid: data.uuid ?? '',
-    clientId: CLIENT_ID,
-    grantType: 'password',
-  });
   return request({
     url: '/auth/login',
     method: 'post',
-    data: body,
+    data: {
+      ...data,
+      clientId: CLIENT_ID,
+      grantType: 'password',
+    },
     transformRequest: [(d: any) => d],
     headers: {
-      'encrypt-key': encryptKey,
+      isEncrypt: 'true',
       'Content-Type': 'application/json',
     },
   }) as unknown as Promise<LoginVo>;

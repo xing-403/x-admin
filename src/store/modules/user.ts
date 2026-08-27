@@ -1,7 +1,13 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
-import { logout as logoutApi, getInfo, login as loginApi, type LoginParams, type UserInfoVo } from '#/api/auth';
+import {
+  logout as logoutApi,
+  getInfo,
+  login as loginApi,
+  type LoginParams,
+  type UserInfoVo,
+} from '#/api/auth';
 import { setAuthToken } from '#/utils/request';
 
 export const useUserStore = defineStore(
@@ -12,10 +18,14 @@ export const useUserStore = defineStore(
     /** 用户信息（含 roles / permissions） */
     const userInfo = ref<UserInfoVo | null>(null);
 
+    const hasToken = computed(() => !!token.value);
+
     const roles = computed(() => userInfo.value?.roles ?? []);
     const permissions = computed(() => userInfo.value?.permissions ?? []);
     /** 用户昵称/账号展示 */
-    const nickname = computed(() => userInfo.value?.user?.nickName ?? userInfo.value?.user?.userName ?? '');
+    const nickname = computed(
+      () => userInfo.value?.user?.nickName ?? userInfo.value?.user?.userName ?? '',
+    );
 
     function setToken(value: string) {
       token.value = value;
@@ -25,7 +35,7 @@ export const useUserStore = defineStore(
     /** 登录：调用接口并保存 token */
     async function login(data: LoginParams) {
       const vo = await loginApi(data);
-      setToken(vo.accessToken);
+      setToken(vo.access_token);
       return vo;
     }
 
@@ -54,6 +64,7 @@ export const useUserStore = defineStore(
     return {
       token,
       userInfo,
+      hasToken,
       roles,
       permissions,
       nickname,

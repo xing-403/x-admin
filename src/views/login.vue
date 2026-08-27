@@ -29,8 +29,8 @@ const loading = ref(false);
 const captcha = reactive<CaptchaVo>({ captchaEnabled: true, uuid: '', img: '' });
 
 const formSchema = reactive({
-  username: '',
-  password: '',
+  username: 'admin',
+  password: 'admin123',
   code: '',
 });
 const rememberMe = ref(false);

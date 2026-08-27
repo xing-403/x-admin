@@ -6,14 +6,17 @@
  */
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import { message } from 'antdv-next';
-
-import { decryptResponse } from './encrypt';
+import { encrypt, encryptBase64, encryptWithAes, generateAesKey } from './encrypt';
 
 const baseURL = import.meta.env.VITE_APP_BASE_API || '';
 
 const request: AxiosInstance = axios.create({
   baseURL,
   timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8',
+    clientid: import.meta.env.VITE_APP_CLIENT_ID,
+  },
 });
 
 // 通过模块级变量持有 token，避免与 user store 形成循环依赖
@@ -23,32 +26,32 @@ let authToken = '';
 export function setAuthToken(token: string) {
   authToken = token;
   if (token) {
-    request.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    request.defaults.headers['Authorization'] = `Bearer ${token}`;
   } else {
-    delete request.defaults.headers.common['Authorization'];
+    delete request.defaults.headers['Authorization'];
   }
 }
 
 request.interceptors.request.use((config) => {
   if (authToken) {
-    config.headers.set('Authorization', `Bearer ${authToken}`);
+    config.headers['Authorization'] = `Bearer ${authToken}`;
+  }
+  // 是否需要加密
+  const isEncrypt = config.headers?.isEncrypt === 'true';
+  if (isEncrypt && (config.method === 'post' || config.method === 'put')) {
+    // 生成一个 AES 密钥
+    const aesKey = generateAesKey();
+    config.headers['encrypt-key'] = encrypt(encryptBase64(aesKey));
+    config.data =
+      typeof config.data === 'object'
+        ? encryptWithAes(JSON.stringify(config.data), aesKey)
+        : encryptWithAes(config.data, aesKey);
   }
   return config;
 });
 
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    // @ApiEncrypt 响应：存在 encrypt-key 头则需解密
-    const encryptKey = response.headers['encrypt-key'];
-    if (encryptKey) {
-      const raw = typeof response.data === 'string' ? response.data : JSON.stringify(response.data);
-      try {
-        response.data = decryptResponse(raw, encryptKey);
-      } catch {
-        return Promise.reject(new Error('响应解密失败'));
-      }
-    }
-
     const res = response.data;
     // 标准 R 信封：{ code, msg, data }
     if (res && typeof res === 'object' && 'code' in res) {

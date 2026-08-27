@@ -17,9 +17,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, _from, next) => {
   const userStore = useUserStore();
-  const hasToken = !!userStore.token;
-
-  if (hasToken) {
+  if (userStore.hasToken) {
     // 已登录访问登录页 → 跳首页
     if (to.path === '/login') {
       next('/');
@@ -35,8 +33,7 @@ router.beforeEach(async (to, _from, next) => {
         return;
       }
     }
-    next();
-    return;
+    return next();
   }
 
   // 未登录
