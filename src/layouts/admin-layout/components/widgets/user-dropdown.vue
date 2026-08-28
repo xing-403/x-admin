@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from '#/locales';
 import { useUserStore } from '#/store/modules/user';
-import { UserOutlined } from '@antdv-next/icons';
+import { IdcardOutlined, LogoutOutlined } from '@antdv-next/icons';
 import type { MenuItemType } from 'antdv-next';
 
 import { useRouter } from 'vue-router';
@@ -15,16 +15,28 @@ async function handleLogout() {
   router.push('/login')
 }
 
+function handleProfile() {
+  router.push('/account/profile')
+}
+
 const items: MenuItemType[] = [
   {
+    label: t('common.profile'),
+    key: 'profile',
+    icon: IdcardOutlined,
+  },
+  {
     label: t('common.logout'),
-    key: 'layout',
-    icon: UserOutlined,
-  }
+    key: 'logout',
+    icon: LogoutOutlined,
+  },
 ]
 function handleClickUserDropDown({ key }: any) {
   switch (key) {
-    case 'layout':
+    case 'profile':
+      handleProfile()
+      break
+    case 'logout':
       handleLogout()
       break
   }

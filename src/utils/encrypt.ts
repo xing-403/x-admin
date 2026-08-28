@@ -2,8 +2,6 @@
 import CryptoJS from 'crypto-js';
 import { JSEncrypt } from 'jsencrypt';
 
-const RSA_SCHEME = 'RSAES-PKCS1-V1_5';
-
 const publicKey = import.meta.env.VITE_APP_RSA_PUBLIC_KEY;
 
 // 前端不建议存放私钥 不建议解密数据 因为都是透明的意义不大

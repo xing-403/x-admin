@@ -6,5 +6,5 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <Page> {{ t('pages.about') }} <SvgIcon name="StepForwardOutlined" /></Page>
+  <Page> {{ t('pages.about') }}</Page>
 </template>

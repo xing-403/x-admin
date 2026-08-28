@@ -37,6 +37,17 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        // 个人信息：仅右上角 user-dropdown 入口，不在侧边栏展示
+        name: 'Profile',
+        path: 'account/profile',
+        component: () => import('#/views/account/profile.vue'),
+        meta: {
+          icon: 'carbon:user',
+          title: 'profile',
+          hideInMenu: true,
+        },
+      },
     ],
   },
 ];
