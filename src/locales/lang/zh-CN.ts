@@ -63,5 +63,9 @@ export default {
     save: '保存',
     updateSuccess: '个人信息修改成功',
     pwdSuccess: '修改成功，请重新登录',
+    avatarTypeInvalid: '头像只能是图片文件',
+    avatarSizeInvalid: '头像大小不能超过 2MB',
+    avatarSuccess: '头像修改成功',
+    changeAvatar: '更换头像',
   },
 };

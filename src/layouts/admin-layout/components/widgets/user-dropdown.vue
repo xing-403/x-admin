@@ -47,7 +47,7 @@ function handleClickUserDropDown({ key }: any) {
 
 <template>
   <a-dropdown :menu="{ items, onClick: handleClickUserDropDown }">
-    <a-avatar cursor-pointer>
+    <a-avatar cursor-pointer :src="userStore.userInfo?.user?.avatarUrl || undefined">
       <template #icon>
         <SvgIcon name="UserOutlined" />
       </template>
@@ -55,7 +55,7 @@ function handleClickUserDropDown({ key }: any) {
     <template #popupRender="menu">
       <div w-180px style="background: var(--background);border-radius: 4px ;">
         <a-flex p-3 gap="small">
-          <a-avatar size="large">
+          <a-avatar size="large" :src="userStore.userInfo?.user?.avatarUrl || undefined">
             <template #icon>
               <SvgIcon name="UserOutlined" />
             </template>

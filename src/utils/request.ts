@@ -36,6 +36,10 @@ request.interceptors.request.use((config) => {
   if (authToken) {
     config.headers['Authorization'] = `Bearer ${authToken}`;
   }
+  // FormData 上传：清除显式 Content-Type，让 axios 自动设置为 multipart/form-data（含 boundary）
+  if (config.data instanceof FormData) {
+    config.headers['Content-Type'] = undefined as unknown as string;
+  }
   // 是否需要加密
   const isEncrypt = config.headers?.isEncrypt === 'true';
   if (isEncrypt && (config.method === 'post' || config.method === 'put')) {

@@ -45,9 +45,29 @@ export interface UpdatePasswordParams {
   newPassword: string;
 }
 
+/** OSS 上传返回（对接 SysOssController.upload -> SysOssUploadVo） */
+export interface OssUploadVo {
+  /** 文件访问地址 */
+  url: string;
+  /** 原始文件名 */
+  originalName: string;
+  /** OSS 主键（字符串形式） */
+  ossId: string;
+}
+
 /** 获取当前登录用户个人信息 */
 export function getProfile(): Promise<ProfileVo> {
   return request.get('/system/user/profile') as unknown as Promise<ProfileVo>;
+}
+
+/**
+ * 上传头像：multipart/form-data，无需加密。
+ * 后端返回 ossId，供 updateProfile({ avatar }) 引用。
+ */
+export function uploadAvatar(file: File): Promise<OssUploadVo> {
+  const formData = new FormData();
+  formData.append('file', file);
+  return request.post('/resource/oss/upload', formData) as unknown as Promise<OssUploadVo>;
 }
 
 /** 修改当前登录用户个人信息（明文接口） */

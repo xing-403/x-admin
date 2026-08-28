@@ -63,5 +63,9 @@ export default {
     save: 'Save',
     updateSuccess: 'Profile updated successfully',
     pwdSuccess: 'Password changed, please login again',
+    avatarTypeInvalid: 'Avatar must be an image file',
+    avatarSizeInvalid: 'Avatar size cannot exceed 2MB',
+    avatarSuccess: 'Avatar updated successfully',
+    changeAvatar: 'Change Avatar',
   },
 };

@@ -9,6 +9,7 @@ import {
   getProfile,
   updatePassword,
   updateProfile,
+  uploadAvatar,
   type ProfileVo,
 } from '#/api/profile';
 
@@ -21,6 +22,7 @@ const userStore = useUserStore();
 const loading = ref(false);
 const savingBasic = ref(false);
 const savingPwd = ref(false);
+const uploadingAvatar = ref(false);
 const profile = ref<ProfileVo | null>(null);
 
 /** 基本资料表单 */
@@ -147,6 +149,38 @@ async function handleSavePwd() {
   }
 }
 
+/** 选择头像文件后：校验 -> 上传 OSS -> 更新个人信息 */
+async function beforeAvatarUpload(file: File) {
+  const isImage = file.type.startsWith('image/');
+  if (!isImage) {
+    message.error(t('profile.avatarTypeInvalid'));
+    return false;
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error(t('profile.avatarSizeInvalid'));
+    return false;
+  }
+  uploadingAvatar.value = true;
+  try {
+    const oss = await uploadAvatar(file);
+    await updateProfile({ avatar: Number(oss.ossId) });
+    message.success(t('profile.avatarSuccess'));
+    // 同步用户 store，保证右上角展示即时更新
+    if (userStore.userInfo?.user) {
+      userStore.userInfo.user.avatar = Number(oss.ossId);
+      userStore.userInfo.user.avatarUrl = oss.url;
+    }
+    await loadProfile();
+  } catch {
+    // 异常已由请求拦截器统一提示
+  } finally {
+    uploadingAvatar.value = false;
+  }
+  // 返回 false 阻止 a-upload 自动上传，由我们手动上传
+  return false;
+}
+
 onMounted(loadProfile);
 </script>
 
@@ -156,11 +190,23 @@ onMounted(loadProfile);
       <!-- 用户信息卡 -->
       <a-card :loading="loading">
         <a-flex align="center" gap="large">
-          <a-avatar :size="72" :src="profile?.user.avatarUrl">
-            <template #icon>
-              <SvgIcon name="UserOutlined" />
-            </template>
-          </a-avatar>
+          <a-upload
+            :show-upload-list="false"
+            accept="image/*"
+            :before-upload="beforeAvatarUpload"
+          >
+            <div class="avatar-uploader">
+              <a-avatar :size="72" :src="profile?.user.avatarUrl || undefined">
+                <template #icon>
+                  <SvgIcon name="UserOutlined" />
+                </template>
+              </a-avatar>
+              <div class="avatar-uploader-mask">
+                <SvgIcon v-if="!uploadingAvatar" name="CameraOutlined" />
+                <a-spin v-else size="small" />
+              </div>
+            </div>
+          </a-upload>
           <a-flex vertical gap="small">
             <a-flex align="center" gap="small">
               <span text-lg font-semibold>{{ profile?.user.nickName || profile?.user.userName }}</span>
@@ -239,3 +285,30 @@ onMounted(loadProfile);
     </a-flex>
   </Page>
 </template>
+
+<style scoped>
+.avatar-uploader {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.avatar-uploader-mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 22px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.avatar-uploader:hover .avatar-uploader-mask {
+  opacity: 1;
+}
+</style>
