@@ -15,13 +15,12 @@ const router = createRouter({
   },
 });
 
-router.beforeEach(async (to, _from, next) => {
+router.beforeEach(async (to, _from) => {
   const userStore = useUserStore();
   if (userStore.hasToken) {
     // 已登录访问登录页 → 跳首页
     if (to.path === '/login') {
-      next('/');
-      return;
+      return '/';
     }
     // 首次进入：拉取用户信息，失败则清除登录态
     if (!userStore.userInfo) {
@@ -29,18 +28,17 @@ router.beforeEach(async (to, _from, next) => {
         await userStore.fetchUserInfo();
       } catch {
         await userStore.logout();
-        next(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
-        return;
+        return `/login?redirect=${encodeURIComponent(to.fullPath)}`;
       }
     }
-    return next();
+    return true;
   }
 
   // 未登录
   if (to.path === '/login') {
-    next();
+    return true;
   } else {
-    next(`/login?redirect=${encodeURIComponent(to.fullPath)}`);
+    return `/login?redirect=${encodeURIComponent(to.fullPath)}`;
   }
 });
 
