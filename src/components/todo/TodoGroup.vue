@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { listGroups, removeGroups, type TodoGroupVo } from '#/api/todo';
 import { useI18n } from '#/locales';
-import { message } from 'antdv-next';
+import { message,theme } from 'antdv-next';
 import TodoGroupModal from '#/components/todo/actions/TodoGroupModal.vue';
 import { onMounted, ref } from 'vue';
 
@@ -9,7 +9,7 @@ const { t } = useI18n();
 const emits = defineEmits<{ saved: [] }>();
 const groupLoading = ref(false);
 const groups = ref<TodoGroupVo[]>([]);
-const selectedGroupId = defineModel<number | null>();
+const selectedGroupId = defineModel<string | null>();
 
 const todoGroupModalRef = ref<InstanceType<typeof TodoGroupModal>>();
 
@@ -53,6 +53,7 @@ async function loadGroups() {
 
 onMounted(() => {
   loadGroups();
+  console.log(theme)
 });
 </script>
 <template>
@@ -72,7 +73,7 @@ onMounted(() => {
           :class="[selectedGroupId === group.groupId && 'selected-group']" @click="selectGroup(group)">
           <a-flex justify="space-between" align="center" gap="small">
             <a-flex flex="1" align="center">
-              <span class="group-name">{{ group.groupName }}</span>
+              <a-typography-text>{{ group.groupName }}</a-typography-text>
             </a-flex>
             <a-flex>
               <a-button type="text" size="small" @click.stop="openGroupModal(group)">
@@ -113,8 +114,4 @@ onMounted(() => {
   background: var(--primary);
 }
 
-.group-name {
-  font-weight: 500;
-  color: var(--foreground);
-}
 </style>

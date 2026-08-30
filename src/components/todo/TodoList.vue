@@ -10,7 +10,7 @@ import { message } from 'antdv-next';
 import TodoModal from '#/components/todo/actions/TodoModal.vue';
 import { computed, onMounted, ref, watch } from 'vue';
 
-const props = defineProps<{ groupId: number | null }>();
+const props = defineProps<{ groupId: string | null }>();
 
 const { t } = useI18n();
 
@@ -20,7 +20,7 @@ const todoModalRef = ref<InstanceType<typeof TodoModal>>();
 
 const doneCount = computed(() => items.value.filter((i) => i.status === '1').length);
 
-async function loadItems(groupId: number) {
+async function loadItems(groupId: string) {
   itemLoading.value = true;
   try {
     items.value = await listItems(groupId);

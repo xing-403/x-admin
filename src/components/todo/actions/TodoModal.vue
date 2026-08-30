@@ -9,7 +9,7 @@ import { useI18n } from '#/locales';
 import { message, type FormInstance, type Rule } from 'antdv-next';
 import { reactive, ref } from 'vue';
 
-const props = defineProps<{ groupId: number }>();
+const props = defineProps<{ groupId: string }>();
 const emits = defineEmits<{ saved: [] }>();
 
 const { t } = useI18n();
@@ -17,12 +17,12 @@ const { t } = useI18n();
 const itemModalOpen = ref(false);
 const itemModalTitle = ref('');
 const itemFormRef = ref<FormInstance>();
-const itemEditId = ref<number | null>(null);
+const itemEditId = ref<string | null>(null);
 const itemForm = reactive<TodoItemBo & { _status: string }>({
   todoName: '',
   todoDesc: '',
   deadline: '',
-  groupId: 0,
+  groupId: '',
   status: '0',
   _status: '0',
 });

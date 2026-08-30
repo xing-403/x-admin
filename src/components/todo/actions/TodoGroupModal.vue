@@ -17,7 +17,7 @@ const groupRules: Record<string, Rule[]> = {
 };
 
 
-const groupEditId = ref<number | null>(null);
+const groupEditId = ref<string | null>(null);
 function open(group?: TodoGroupVo) {
   groupModalOpen.value = true;
 
