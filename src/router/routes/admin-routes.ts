@@ -48,6 +48,15 @@ const routes: RouteRecordRaw[] = [
           hideInMenu: true,
         },
       },
+      {
+        name: 'Todo',
+        path: 'todo',
+        component: () => import('#/views/todo/index.vue'),
+        meta: {
+          icon: 'carbon:task',
+          title: 'todo',
+        },
+      },
     ],
   },
 ];

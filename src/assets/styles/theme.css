@@ -11,14 +11,6 @@
   /* 默认文字颜色 */
   --foreground: #1f2329;
 
-  /* ============= 卡片/弹层 ============= */
-  /* Background color for <Card /> */
-  --card: #ffffff;
-  --card-foreground: #1f2329;
-
-  /* Background color for popovers such as <DropdownMenu />, <HoverCard />, <Popover /> */
-  --popover: #ffffff;
-  --popover-foreground: #1f2329;
 
   /* Muted backgrounds such as <TabsList />, <Skeleton /> and <Switch /> */
   --muted: #f2f3f5;
@@ -28,61 +20,15 @@
   --primary: #1677ff;
   --primary-foreground: #ffffff;
 
-  /* Used for destructive actions such as <Button variant="destructive"> */
-  --destructive: #ff4d4f;
-  --destructive-foreground: #ffffff;
-
-  /* Used for info / success / warning actions such as <message> */
-  --info: #f5f5f5;
-  --info-foreground: #8a919f;
-
-  --success: #52c41a;
-  --success-foreground: #ffffff;
-
-  --warning: #faad14;
-  --warning-foreground: #ffffff;
-
-  /* ============= 次要色（按钮 secondary 等） ============= */
-  --secondary: #f2f3f5;
-  --secondary-foreground: #1f2329;
-
-  /* ============= 强调色（hover 等交互态） ============= */
-  --accent: #f2f3f5;
-  --accent-foreground: #1f2329;
-  --accent-dark: #e5e7eb;
-  --accent-darker: #d9dce0;
-  --accent-lighter: #fafafa;
-  --accent-hover: #e5e7eb;
-
-  /* 更深的色块（分隔/占位） */
-  --heavy: #e5e7eb;
-  --heavy-foreground: #1f2329;
-
-  /* ============= 边框 / 输入框 ============= */
-  /* Default border color */
-  --border: #e5e7eb;
-
-  /* Border color for inputs such as <Input />, <Select />, <Textarea /> */
-  --input: #e5e7eb;
-  --input-placeholder: #a0a6b0;
-  --input-background: #ffffff;
-
-  /* Border radius for card, input and buttons */
-  --radius: 0.5rem;
-
-  /* ============= 遮罩 ============= */
-  --overlay: rgba(0, 0, 0, 0.45);
-  --overlay-content: rgba(245, 245, 245, 0.45);
-
-  /* ============= 字体 / 菜单 ============= */
-  --font-size-base: 16px;
-  --menu-font-size: calc(var(--font-size-base) * 0.875);
 
   /* ============= 组件 / UI ============= */
   /* 侧边栏 */
   --sidebar: #ffffff;
   --sidebar-deep: #ffffff;
   --menu: var(--sidebar);
+
+  /* 通用边框色 */
+  --border: #e5e6eb;
 
   /* 顶栏 */
   --header: #ffffff;
@@ -101,12 +47,6 @@
   --background-deep: #14161a;
   --foreground: #e6e8eb;
 
-  /* ============= 卡片/弹层 ============= */
-  --card: #23262d;
-  --card-foreground: #e6e8eb;
-
-  --popover: #23262d;
-  --popover-foreground: #e6e8eb;
 
   --muted: #2a2d33;
   --muted-foreground: #8a919f;
@@ -115,54 +55,11 @@
   --primary: #1668dc;
   --primary-foreground: #ffffff;
 
-  --destructive: #ff4d4f;
-  --destructive-foreground: #ffffff;
-
-  --info: #1f1f1f;
-  --info-foreground: #8a919f;
-
-  --success: #52c41a;
-  --success-foreground: #ffffff;
-
-  --warning: #faad14;
-  --warning-foreground: #ffffff;
-
-  /* ============= 次要色 ============= */
-  --secondary: #2a2d33;
-  --secondary-foreground: #e6e8eb;
-
-  /* ============= 强调色 ============= */
-  --accent: #2a2d33;
-  --accent-foreground: #e6e8eb;
-  --accent-dark: #383b42;
-  --accent-darker: #43464d;
-  --accent-lighter: #1c1e23;
-  --accent-hover: #383b42;
-
-  --heavy: #383b42;
-  --heavy-foreground: #e6e8eb;
-
-  /* ============= 边框 / 输入框 ============= */
-  --border: #2e3137;
-
-  --input: rgba(255, 255, 255, 0.1);
-  --input-placeholder: #8a919f;
-  --input-background: rgba(255, 255, 255, 0.05);
-
-  --radius: 0.5rem;
-
-  /* ============= 遮罩 ============= */
-  --overlay: rgba(0, 0, 0, 0.4);
-  --overlay-content: rgba(0, 0, 0, 0.4);
-
-  /* ============= 字体 / 菜单 ============= */
-  --font-size-base: 16px;
-  --menu-font-size: calc(var(--font-size-base) * 0.875);
-
-  /* ============= 组件 / UI ============= */
   --sidebar: #181a1f;
   --sidebar-deep: #14161a;
   --menu: var(--sidebar);
+
+  --border: #2a2d33;
 
   --header: #181a1f;
 
