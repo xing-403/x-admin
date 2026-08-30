@@ -36,7 +36,7 @@ export interface UpdateProfileParams {
   email?: string;
   phoneNumber?: string;
   gender?: string;
-  avatar?: number;
+  avatar?: string;
 }
 
 /** 修改密码参数 */

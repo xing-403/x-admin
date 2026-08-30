@@ -164,7 +164,7 @@ async function beforeAvatarUpload(file: File) {
   uploadingAvatar.value = true;
   try {
     const oss = await uploadAvatar(file);
-    await updateProfile({ avatar: Number(oss.ossId) });
+    await updateProfile({ avatar: oss.ossId });
     message.success(t('profile.avatarSuccess'));
     // 同步用户 store，保证右上角展示即时更新
     if (userStore.userInfo?.user) {
@@ -190,13 +190,9 @@ onMounted(loadProfile);
       <!-- 用户信息卡 -->
       <a-card :loading="loading">
         <a-flex align="center" gap="large">
-          <a-upload
-            :show-upload-list="false"
-            accept="image/*"
-            :before-upload="beforeAvatarUpload"
-          >
+          <a-upload :show-upload-list="false" accept="image/*" :before-upload="beforeAvatarUpload">
             <div class="avatar-uploader">
-              <a-avatar :size="72" :src="profile?.user.avatarUrl || undefined">
+              <a-avatar :size="72" :src="profile?.user.avatarUrl">
                 <template #icon>
                   <SvgIcon name="UserOutlined" />
                 </template>
@@ -225,13 +221,7 @@ onMounted(loadProfile);
       <a-card :loading="loading">
         <a-tabs>
           <a-tab-pane key="basic" :tab="t('profile.basicInfo')">
-            <a-form
-              ref="basicFormRef"
-              :model="basicForm"
-              :rules="basicRules"
-              layout="vertical"
-              max-w-480px
-            >
+            <a-form ref="basicFormRef" :model="basicForm" :rules="basicRules" layout="vertical" max-w-480px>
               <a-form-item :label="t('profile.nickName')" name="nickName">
                 <a-input v-model:value="basicForm.nickName" allow-clear />
               </a-form-item>
@@ -257,13 +247,7 @@ onMounted(loadProfile);
           </a-tab-pane>
 
           <a-tab-pane key="pwd" :tab="t('profile.changePassword')">
-            <a-form
-              ref="pwdFormRef"
-              :model="pwdForm"
-              :rules="pwdRules"
-              layout="vertical"
-              max-w-480px
-            >
+            <a-form ref="pwdFormRef" :model="pwdForm" :rules="pwdRules" layout="vertical" max-w-480px>
               <a-form-item :label="t('profile.oldPassword')" name="oldPassword">
                 <a-input-password v-model:value="pwdForm.oldPassword" />
               </a-form-item>
