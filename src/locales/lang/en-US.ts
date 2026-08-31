@@ -110,6 +110,7 @@ export default {
     deleteGroupConfirm: 'Delete this group and all its todos?',
     deleteItemConfirm: 'Delete this todo?',
     save: 'Save',
+    delete: 'delete',
     cancel: 'Cancel',
   },
 };

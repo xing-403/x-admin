@@ -1,7 +1,6 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router';
 import { adminRoutes } from '#/router/routes';
-import { usePreferencesStore } from '#/store/modules/preferences';
 import { translate } from '#/locales';
 import type { LayoutMenuItem, LayoutMenuProps } from './type';
 
@@ -73,13 +72,11 @@ function findOpenKeys(items: LayoutMenuItem[], path: string): string[] {
 }
 
 export function useLayoutMenus(props: LayoutMenuProps) {
-  const preferencesStore = usePreferencesStore();
   const route = useRoute();
   const router = useRouter();
 
-  const collapsed = computed(() => preferencesStore.sidebar.collapsed);
   const menuMode = computed(() => {
-    if (!collapsed.value && props.mode === 'vertical') {
+    if (props.collapsed && props.mode === 'vertical') {
       return 'inline';
     }
     return props.mode;
@@ -109,7 +106,6 @@ export function useLayoutMenus(props: LayoutMenuProps) {
   }
 
   return {
-    collapsed,
     menuMode,
     menuItems,
     openKeys,

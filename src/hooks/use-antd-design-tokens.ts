@@ -1,5 +1,6 @@
 import { reactive, watch } from 'vue';
 import { usePreferencesStore } from '#/store/modules/preferences';
+import type { GlobalToken } from 'antdv-next';
 
 const getCssVariableValue = (variable: string) => {
   const rootStyles = getComputedStyle(document.documentElement);
@@ -9,7 +10,7 @@ const getCssVariableValue = (variable: string) => {
 export function useAntdDesignTokens() {
   const preferencesStore = usePreferencesStore();
 
-  const tokens = reactive({
+  const tokens = reactive<Partial<GlobalToken>>({
     colorPrimary: getCssVariableValue('--color-primary'),
     colorBgContainer: getCssVariableValue('--base-background'),
     colorBgLayout: getCssVariableValue('--page-background'),

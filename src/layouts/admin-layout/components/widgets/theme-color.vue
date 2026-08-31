@@ -33,10 +33,7 @@ function select({ key }: { key: string }) {
     </a-button>
     <template #labelRender="item">
       <a-flex w-100px justify="space-between" align="center" gap="small">
-        <a-flex gap="small" align="center">
-          <div w-4 h-4 b-rd-full :style="{ background: item.color }"></div>
-          <a-typography-text>{{ item.label }}</a-typography-text>
-        </a-flex>
+        <a-badge :color="item.color" :text="item.label" />
         <SvgIcon v-if="item.key === current" name="CheckCircleOutlined" color="var(--color-primary)" />
       </a-flex>
     </template>

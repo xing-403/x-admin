@@ -11,6 +11,9 @@ importers:
       '@antdv-next/icons':
         specifier: ^1.1.2
         version: 1.1.2(vue@3.5.41(typescript@6.0.3))
+      '@vueuse/core':
+        specifier: ^14.4.0
+        version: 14.4.0(vue@3.5.41(typescript@6.0.3))
       antdv-next:
         specifier: ^1.5.2
         version: 1.5.2(vue@3.5.41(typescript@6.0.3))

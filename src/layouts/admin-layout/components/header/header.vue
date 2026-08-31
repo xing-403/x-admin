@@ -9,6 +9,7 @@ import Language from '../widgets/language.vue'
 import Theme from '../widgets/theme.vue'
 import ThemeColor from '../widgets/theme-color.vue'
 import UserDropdown from '../widgets/user-dropdown.vue'
+import { useSystemStore } from '#/store/modules/system.ts'
 
 const preferencesStore = usePreferencesStore()
 const sidebarEnable = computed(() => preferencesStore.sidebar.enable)
@@ -43,10 +44,12 @@ function handleBreadcrumbClick(path?: string) {
           </template>
         </a-breadcrumb>
       </a-flex>
-      <a-flex align="center" gap="small">
-        <Language />
-        <ThemeColor />
-        <Theme />
+      <a-flex gap="small">
+        <a-flex v-if="!useSystemStore().isXs" align="center" gap="small">
+          <Language />
+          <ThemeColor />
+          <Theme />
+        </a-flex>
         <UserDropdown />
       </a-flex>
     </a-flex>

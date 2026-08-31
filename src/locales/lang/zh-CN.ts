@@ -110,6 +110,7 @@ export default {
     deleteGroupConfirm: '确定删除该分组及其下所有待办吗？',
     deleteItemConfirm: '确定删除该待办吗？',
     save: '保存',
+    delete: '删除',
     cancel: '取消',
   },
 };

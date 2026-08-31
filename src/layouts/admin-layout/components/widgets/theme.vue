@@ -26,7 +26,7 @@ function handleToggleTheme() {
 /** 当前图标：跟随系统时用显示器图标，否则按明暗显示太阳/月亮 */
 const currentIcon = computed(() => {
   if (mode.value === 'auto') return 'MonitorOutlined';
-  return preferencesStore.isDark ? 'SunOutlined' : 'MoonOutlined';
+  return preferencesStore.isDark ? 'MoonOutlined' : 'SunOutlined';
 });
 </script>
 

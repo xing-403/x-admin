@@ -1,17 +1,28 @@
 /* 默认主题 */
-:root {
+:root,
+:root[data-theme='default'] {
   --color-primary: #165dff;
   --text-primary: #303133;
   --page-background: #f2f3f5;
   --base-background: #ffffff;
-  color-scheme: light;
+
+  --color-primary-10: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  --color-primary-20: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  --color-primary-30: color-mix(in srgb, var(--color-primary) 30%, transparent);
+  --color-primary-40: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  --color-primary-50: color-mix(in srgb, var(--color-primary) 50%, transparent);
+  --color-primary-60: color-mix(in srgb, var(--color-primary) 60%, transparent);
+  --color-primary-70: color-mix(in srgb, var(--color-primary) 70%, transparent);
+  --color-primary-80: color-mix(in srgb, var(--color-primary) 80%, transparent);
+  --color-primary-90: color-mix(in srgb, var(--color-primary) 90%, transparent);
+  --color-primary-100: color-mix(in srgb, var(--color-primary) 100%, transparent);
 }
-.dark {
+.dark,
+.dark[data-theme='default'] {
   --color-primary: #1668dc;
   --text-primary: #e5eaf3;
   --page-background: #0a0a0a;
   --base-background: #141414;
-  color-scheme: dark;
 }
 
 /* 静谧青灰 */
@@ -43,7 +54,7 @@
 
 /* 炭灰极简 */
 :root[data-theme='carbon'] {
-  --color-primary: #36454F;
+  --color-primary: #36454f;
   --text-primary: #121212;
   --page-background: #fafafa;
   --base-background: #ffffff;
