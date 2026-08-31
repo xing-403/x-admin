@@ -10,11 +10,11 @@ export function useThemeCssVariable() {
     root.classList.toggle('dark', isDark);
   };
 
-  /**
-   * 运行时切换主题：先开启过渡，再改 class，过渡结束后移除。
-   * 仅在 html.theme-anim 存在的短暂窗口内对颜色属性做过渡，
-   * 不影响 hover 等常态交互。
-   */
+  function applyThemeColor(value: string) {
+    const root = document.documentElement;
+    root.dataset.theme = value;
+  }
+
   let transitionTimer: ReturnType<typeof setTimeout> | undefined;
   const applyThemeWithTransition = (isDark: boolean) => {
     const root = document.documentElement;
@@ -35,6 +35,12 @@ export function useThemeCssVariable() {
   watch(
     () => preferencesStore.isDark,
     (value) => applyThemeWithTransition(value),
+  );
+
+  watch(
+    () => preferencesStore.theme.color,
+    (value) => applyThemeColor(value),
+    { immediate: true },
   );
 
   return { applyTheme, applyThemeWithTransition };

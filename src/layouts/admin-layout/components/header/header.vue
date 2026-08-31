@@ -7,6 +7,7 @@ import SvgIcon from '#/components/SvgIcon/index.vue'
 import { useLayoutBreadcrumbs } from './use-layout-breadcrumbs'
 import Language from '../widgets/language.vue'
 import Theme from '../widgets/theme.vue'
+import ThemeColor from '../widgets/theme-color.vue'
 import UserDropdown from '../widgets/user-dropdown.vue'
 
 const preferencesStore = usePreferencesStore()
@@ -16,14 +17,9 @@ const router = useRouter()
 const { breadcrumbs } = useLayoutBreadcrumbs()
 const { t } = useI18n()
 
-
-
 function toggleSidebarEnable() {
   preferencesStore.sidebar.enable = !sidebarEnable.value
 }
-
-
-
 
 function handleBreadcrumbClick(path?: string) {
   if (path) router.push(path)
@@ -49,6 +45,7 @@ function handleBreadcrumbClick(path?: string) {
       </a-flex>
       <a-flex align="center" gap="small">
         <Language />
+        <ThemeColor />
         <Theme />
         <UserDropdown />
       </a-flex>

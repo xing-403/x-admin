@@ -28,7 +28,7 @@ export function useAntdDesignTokens() {
 
   // 主题切换时重新读取 CSS 变量，使 antd token 同步
   watch(
-    () => preferencesStore.isDark,
+    () => [preferencesStore.isDark, preferencesStore.theme.color],
     () => {
       tokens.colorPrimary = getCssVariableValue('--color-primary');
       tokens.colorBgContainer = getCssVariableValue('--page-background');

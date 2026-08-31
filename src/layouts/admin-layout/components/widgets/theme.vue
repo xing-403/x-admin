@@ -10,16 +10,16 @@ const preferencesStore = usePreferencesStore();
 
 const mode = computed(() => preferencesStore.theme.mode);
 
-const menuItems = computed(() => [
+const menuItems = [
   { key: 'light', label: t('theme.light') },
   { key: 'dark', label: t('theme.dark') },
   { key: 'auto', label: t('theme.auto') },
-]);
+];
 
 function handleMenuClick({ key }: { key: string }) {
   preferencesStore.theme.mode = key as ThemeMode;
 }
-function handleToggleTheme(){
+function handleToggleTheme() {
   preferencesStore.theme.mode = preferencesStore.isDark ? 'light' : 'dark';
 }
 
@@ -31,11 +31,17 @@ const currentIcon = computed(() => {
 </script>
 
 <template>
-  <a-dropdown :trigger="['click']" placement="bottomRight" :menu="{ items: menuItems, onClick: handleMenuClick }">
+  <a-dropdown placement="bottomRight" :menu="{ items: menuItems, onClick: handleMenuClick }">
     <a-button type="text" shape="circle" :aria-label="t('header.toggleTheme')" @click="handleToggleTheme">
       <template #icon>
         <SvgIcon :name="currentIcon" />
       </template>
     </a-button>
+    <template #labelRender="item">
+      <a-flex w-100px justify="space-between" gap="small">
+        <a-typography-text>{{ item.label }}</a-typography-text>
+        <SvgIcon v-if="item.key === mode" name="CheckCircleOutlined" color="var(--color-primary)" />
+      </a-flex>
+    </template>
   </a-dropdown>
 </template>

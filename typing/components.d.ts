@@ -17,6 +17,7 @@ declare module 'vue' {
     AButton: typeof import('antdv-next')['Button']
     ACard: typeof import('antdv-next')['Card']
     ACheckbox: typeof import('antdv-next')['Checkbox']
+    AColorPicker: typeof import('antdv-next')['ColorPicker']
     AConfigProvider: typeof import('antdv-next')['ConfigProvider']
     ADatePicker: typeof import('antdv-next')['DatePicker']
     ADivider: typeof import('antdv-next')['Divider']

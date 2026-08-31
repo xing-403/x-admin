@@ -2,15 +2,81 @@
 :root {
   --color-primary: #165dff;
   --text-primary: #303133;
-  --page-background: #F2F3F5;
-  --base-background: #FFFFFF;
+  --page-background: #f2f3f5;
+  --base-background: #ffffff;
   color-scheme: light;
 }
 .dark {
   --color-primary: #1668dc;
-  --text-primary: #E5EAF3;
-  --page-background: #0A0A0A;
+  --text-primary: #e5eaf3;
+  --page-background: #0a0a0a;
   --base-background: #141414;
-  accent-color: var(--primary);
   color-scheme: dark;
+}
+
+/* 静谧青灰 */
+:root[data-theme='cyan'] {
+  --color-primary: #008699;
+  --text-primary: #1f292e;
+  --page-background: #f4f7f8;
+  --base-background: #ffffff;
+}
+
+.dark[data-theme='cyan'] {
+  --text-primary: #e5eaf3;
+  --page-background: #1a2428;
+  --base-background: #273338;
+}
+/* 稳重墨紫 */
+:root[data-theme='purple'] {
+  --color-primary: #722ed1;
+  --text-primary: #202124;
+  --page-background: #f7f5fa;
+  --base-background: #ffffff;
+}
+
+.dark[data-theme='purple'] {
+  --text-primary: #e5eaf3;
+  --page-background: #1e1d29;
+  --base-background: #2c2b3d;
+}
+
+/* 炭灰极简 */
+:root[data-theme='carbon'] {
+  --color-primary: #36454F;
+  --text-primary: #121212;
+  --page-background: #fafafa;
+  --base-background: #ffffff;
+}
+
+.dark[data-theme='carbon'] {
+  --text-primary: #e5eaf3;
+  --page-background: #121212;
+  --base-background: #1e1e1e;
+}
+/* 森林绿 */
+:root[data-theme='forest'] {
+  --color-primary: #007860;
+  --text-primary: #1a2926;
+  --page-background: #f2f7f6;
+  --base-background: #ffffff;
+}
+
+.dark[data-theme='forest'] {
+  --text-primary: #e5eaf3;
+  --page-background: #141e1c;
+  --base-background: #20332f;
+}
+
+/* 砖红 */
+:root[data-theme='redbiz'] {
+  --color-primary: #b83333;
+  --text-primary: #1a2926;
+  --page-background: #f7f3f3;
+  --base-background: #ffffff;
+}
+.dark[data-theme='redbiz'] {
+  --text-primary: #e5eaf3;
+  --page-background: #0a0a0a;
+  --base-background: #141414;
 }

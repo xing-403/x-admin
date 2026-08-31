@@ -1,8 +1,11 @@
 import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
-import type { LocaleType } from '#/locales';
+import { type LocaleType } from '#/locales';
 
 export type ThemeMode = 'light' | 'dark' | 'auto';
+
+/** 默认主题色 */
+export const DEFAULT_THEME_COLOR = 'default';
 
 export const usePreferencesStore = defineStore(
   'preferences',
@@ -17,6 +20,8 @@ export const usePreferencesStore = defineStore(
     const theme = reactive({
       /** 主题模式：light 浅色 / dark 暗色 / auto 跟随系统 */
       mode: 'light' as ThemeMode,
+      /** 内置主题色标识 */
+      color: 'default',
     });
 
     /**
