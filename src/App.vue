@@ -12,7 +12,6 @@ defineOptions({ name: 'App' });
 const preferencesStore = usePreferencesStore();
 const isDark = computed(() => preferencesStore.isDark);
 
-// 主题切换时自动更新对应的 CSS 变量（html.dark 类）
 useThemeCssVariable();
 
 const { tokens, componentToken } = useAntdDesignTokens();

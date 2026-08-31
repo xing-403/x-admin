@@ -22,12 +22,10 @@
           // auto 模式跟随系统 prefers-color-scheme，避免首屏闪烁(FOUC)
           var isDark =
             mode === 'auto'
-              ? window.matchMedia &&
-                window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
               : mode === 'dark';
           var root = document.documentElement;
           root.classList.toggle('dark', isDark);
-          root.dataset.theme = isDark ? 'dark' : 'light';
         } catch (e) {}
       })();
     </script>

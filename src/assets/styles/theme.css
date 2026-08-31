@@ -1,68 +1,16 @@
+/* 默认主题 */
 :root {
-  --font-family:
-    -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial, 'Noto Sans',
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-
-  /* ============= 基础背景/文字 ============= */
-  /* 页面最底层背景 */
-  --background: #ffffff;
-  /* 主体内容区背景（Layout 容器底色） */
-  --background-deep: #f0f2f5;
-  /* 默认文字颜色 */
-  --foreground: #1f2329;
-
-
-  /* Muted backgrounds such as <TabsList />, <Skeleton /> and <Switch /> */
-  --muted: #f2f3f5;
-  --muted-foreground: #8a919f;
-
-  /* ============= 主题色 ============= */
-  --primary: #1677ff;
-  --primary-foreground: #ffffff;
-
-
-  /* ============= 组件 / UI ============= */
-  /* 侧边栏 */
-  --sidebar: #ffffff;
-  --sidebar-deep: #ffffff;
-  --menu: var(--sidebar);
-
-  /* 通用边框色 */
-  --border: #e5e6eb;
-
-  /* 顶栏 */
-  --header: #ffffff;
-
-  accent-color: var(--primary);
+  --color-primary: #165dff;
+  --text-primary: #303133;
+  --page-background: #F2F3F5;
+  --base-background: #FFFFFF;
   color-scheme: light;
-  --header-height: 42px;
 }
-
-/* ============================== 暗色主题 ============================== */
-.dark,
-.dark[data-theme='custom'],
-.dark[data-theme='default'] {
-  /* ============= 基础背景/文字 ============= */
-  --background: #1c1e23;
-  --background-deep: #14161a;
-  --foreground: #e6e8eb;
-
-
-  --muted: #2a2d33;
-  --muted-foreground: #8a919f;
-
-  /* ============= 主题色 ============= */
-  --primary: #1668dc;
-  --primary-foreground: #ffffff;
-
-  --sidebar: #181a1f;
-  --sidebar-deep: #14161a;
-  --menu: var(--sidebar);
-
-  --border: #2a2d33;
-
-  --header: #181a1f;
-
+.dark {
+  --color-primary: #1668dc;
+  --text-primary: #E5EAF3;
+  --page-background: #0A0A0A;
+  --base-background: #141414;
   accent-color: var(--primary);
   color-scheme: dark;
 }

@@ -6,7 +6,7 @@ import { ref } from 'vue';
 defineOptions({ name: 'Todo' });
 
 /** 当前选中的分组 ID，由 TodoGroup 通过 v-model 回写 */
-const selectGroupId = ref<number | null>(null);
+const selectGroupId = ref<string | null>(null);
 </script>
 
 <template>

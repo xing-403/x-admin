@@ -19,6 +19,9 @@ const menuItems = computed(() => [
 function handleMenuClick({ key }: { key: string }) {
   preferencesStore.theme.mode = key as ThemeMode;
 }
+function handleToggleTheme(){
+  preferencesStore.theme.mode = preferencesStore.isDark ? 'light' : 'dark';
+}
 
 /** 当前图标：跟随系统时用显示器图标，否则按明暗显示太阳/月亮 */
 const currentIcon = computed(() => {
@@ -29,7 +32,7 @@ const currentIcon = computed(() => {
 
 <template>
   <a-dropdown :trigger="['click']" placement="bottomRight" :menu="{ items: menuItems, onClick: handleMenuClick }">
-    <a-button type="text" shape="circle" :aria-label="t('header.toggleTheme')">
+    <a-button type="text" shape="circle" :aria-label="t('header.toggleTheme')" @click="handleToggleTheme">
       <template #icon>
         <SvgIcon :name="currentIcon" />
       </template>
