@@ -133,17 +133,18 @@ function handleClickUserDropDown(info: any) {
       </template>
     </a-avatar>
     <template #popupRender="menu">
-      <div w-180px style="background: var(--base-background);border-radius: 4px ;">
-        <a-flex p-3 gap="small">
-          <a-avatar size="large" :src="userStore.userInfo?.user?.avatarUrl || undefined">
+      <div w-220px style="background: var(--base-background);border-radius: 4px ;">
+        <a-flex p-3 gap="middle" align="center">
+          <a-avatar :size="54" :src="userStore.userInfo?.user?.avatarUrl || undefined">
             <template #icon>
               <SvgIcon name="UserOutlined" />
             </template>
           </a-avatar>
-          <a-flex vertical>
+          <a-flex vertical gap="small">
             <span> {{ userStore.nickname }}</span>
-
-            <span> {{ userStore.roles[0] }}</span>
+            <a-tag v-if="userStore.userInfo?.user.roles.length" color="blue">
+              {{ userStore.userInfo?.user.roles[0].roleName }}
+            </a-tag>
           </a-flex>
         </a-flex>
         <component :is="menu" />

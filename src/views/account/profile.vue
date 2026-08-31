@@ -5,6 +5,7 @@ import { message } from 'antdv-next';
 import type { FormInstance, Rule } from 'antdv-next';
 import { useI18n } from '#/locales';
 import { useUserStore } from '#/store/modules/user';
+import { useSystemStore } from '#/store/modules/system';
 import {
   getProfile,
   updatePassword,
@@ -18,6 +19,7 @@ defineOptions({ name: 'Profile' });
 const { t } = useI18n();
 const router = useRouter();
 const userStore = useUserStore();
+const systemStore = useSystemStore()
 
 const loading = ref(false);
 const savingBasic = ref(false);
@@ -173,11 +175,9 @@ async function beforeAvatarUpload(file: File) {
     }
     await loadProfile();
   } catch {
-    // 异常已由请求拦截器统一提示
   } finally {
     uploadingAvatar.value = false;
   }
-  // 返回 false 阻止 a-upload 自动上传，由我们手动上传
   return false;
 }
 
@@ -186,13 +186,13 @@ onMounted(loadProfile);
 
 <template>
   <Page>
-    <a-flex vertical gap="middle">
+    <a-flex :vertical="systemStore.isXs" gap="middle">
       <!-- 用户信息卡 -->
-      <a-card :loading="loading">
-        <a-flex align="center" gap="large">
+      <a-card min-w-260px :loading="loading">
+        <a-flex align="center" gap="large" vertical>
           <a-upload :show-upload-list="false" accept="image/*" :before-upload="beforeAvatarUpload">
             <div class="avatar-uploader">
-              <a-avatar :size="72" :src="profile?.user.avatarUrl">
+              <a-avatar :size="80" :src="profile?.user.avatarUrl">
                 <template #icon>
                   <SvgIcon name="UserOutlined" />
                 </template>
@@ -203,22 +203,29 @@ onMounted(loadProfile);
               </div>
             </div>
           </a-upload>
-          <a-flex vertical gap="small">
-            <a-flex align="center" gap="small">
-              <span text-lg font-semibold>{{ profile?.user.nickName || profile?.user.userName }}</span>
-              <a-tag v-if="profile?.roleGroup" color="blue">{{ profile?.roleGroup }}</a-tag>
-            </a-flex>
-            <a-flex gap="large" text-sm color="var(--muted-foreground)">
-              <span>{{ t('profile.account') }}：{{ profile?.user.userName }}</span>
-              <span v-if="profile?.user.deptName">{{ t('profile.dept') }}：{{ profile?.user.deptName }}</span>
-              <span v-if="profile?.user.loginDate">{{ t('profile.lastLoginTime') }}：{{ profile?.user.loginDate }}</span>
-            </a-flex>
-          </a-flex>
+          <a-descriptions :column="1">
+            <template #title>
+              <a-flex align="center" gap="small" justify="center" :vertical="systemStore.isXs">
+                <span>{{ profile?.user.nickName || profile?.user.userName }}</span>
+                <a-tag v-if="profile?.roleGroup" color="blue">{{ profile?.roleGroup }}</a-tag>
+              </a-flex>
+            </template>
+            <a-descriptions-item :label="t('profile.account')">
+              {{ profile?.user.userName }}
+            </a-descriptions-item>
+            <a-descriptions-item :label="t('profile.dept')">
+              {{ profile?.user.deptName }}
+            </a-descriptions-item>
+            <a-descriptions-item>
+              {{ profile?.user.loginDate }}
+            </a-descriptions-item>
+          </a-descriptions>
+
         </a-flex>
       </a-card>
 
       <!-- 基本资料 / 修改密码 -->
-      <a-card :loading="loading">
+      <a-card w-full :loading="loading">
         <a-tabs>
           <a-tab-pane key="basic" :tab="t('profile.basicInfo')">
             <a-form ref="basicFormRef" :model="basicForm" :rules="basicRules" layout="vertical" max-w-480px>
