@@ -7,6 +7,7 @@ export default {
     username: '用户名',
     password: '密码',
     captcha: '验证码',
+    delete: '删除',
   },
   login: {
     title: 'x-admin 后台管理系统',
@@ -23,11 +24,27 @@ export default {
     about: '关于',
     profile: '个人信息',
     login: '登录',
+    todo: '待办',
   },
   header: {
     toggleSidebar: '显示/隐藏侧边栏',
     toggleTheme: '切换主题',
+    themeColor: '主题色',
     language: '语言',
+  },
+  theme: {
+    light: '浅色',
+    dark: '深色',
+    auto: '跟随系统',
+    themes: {
+      default: '默认',
+      cyan: '青灰',
+      purple: '墨紫',
+      carbon: '炭灰',
+      forest: '森林绿',
+      redbiz: '砖红',
+      custom: '自定义',
+    },
   },
   pages: {
     home: '这是首页',

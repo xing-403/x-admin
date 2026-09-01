@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@antdv-next/icons": "^1.1.2",
+    "@vueuse/core": "^14.4.0",
     "antdv-next": "^1.5.2",
     "axios": "^1.19.0",
     "crypto-js": "^4.2.0",

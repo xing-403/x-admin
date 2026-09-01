@@ -1,5 +1,11 @@
-# Vue 3 + TypeScript + Vite
+# X Admin
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+一款基于 vue + vite + antd-next 实现的自用框架
+## 技术栈
+* **最新技术栈**：使用 `Vue3`/`vite` 等前端前沿技术开发
+* **TypeScript**：应用程序级 JavaScript 的语言
+* **样式**：提供多套主题，`unocss` 原子化样式, `iconify`图标库 
+* **组件库**：[antd-next](https://github.com/antdv-next/antdv-next)
+* **国际化**：内置完善的国际化方案
+## 后端
+* **后端**：基于 [RuoYi-Vue-Plus](https://github.com/dromara/RuoYi-Vue-Plus) 构建版本 `6.x`

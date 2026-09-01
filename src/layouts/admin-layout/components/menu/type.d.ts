@@ -1,5 +1,5 @@
-
 export interface LayoutMenuProps {
+  collapsed: boolean;
   mode?: 'vertical' | 'horizontal';
 }
 

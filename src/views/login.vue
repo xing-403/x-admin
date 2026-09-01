@@ -91,62 +91,45 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <a-flex h-full bg-[var(--background-deep)]>
-    <div
-      flex="1"
-      class="hidden md:block"
-      style="background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 55%, #ffffff))"
-    ></div>
-    <a-flex relative h-full align="center" justify="center" w-full md:w-600px bg-[var(--background)] p-30px>
-      <a-button
-        type="text"
-        shape="circle"
-        absolute
-        top-16px
-        right-16px
-        :aria-label="t('header.toggleTheme')"
-        @click="toggleTheme"
-      >
+  <a-flex h-full bg-[var(--page-background)]>
+    <div flex="1" class="hidden md:block"
+      style="background: linear-gradient(135deg, var(--color-primary), var(--color-primary-50))">
+    </div>
+    <a-flex relative h-full align="center" justify="center" w-full md:w-600px bg-[var(--base-background)] p-30px>
+      <a-button type="text" shape="circle" absolute top-16px right-16px :aria-label="t('header.toggleTheme')"
+        @click="toggleTheme">
         <template #icon>
           <SvgIcon :name="preferencesStore.isDark ? 'SunOutlined' : 'MoonOutlined'" />
         </template>
       </a-button>
-      <div w-full max-w-400px @keydown.enter.prevent="handleSubmit">
+      <div bg-[var(--page-background)] w-full max-w-400px @keydown.enter.prevent="handleSubmit">
         <h2 mb-6 text-center text-2xl font-bold>{{ t('login.title') }}</h2>
         <a-form ref="formRef" :model="formSchema" :rules="rules" layout="vertical">
           <a-form-item name="username">
             <a-input v-model:value="formSchema.username" :placeholder="t('login.accountPlaceholder')" size="large">
-              <template #prefix><SvgIcon name="UserOutlined" /></template>
+              <template #prefix>
+                <SvgIcon name="UserOutlined" />
+              </template>
             </a-input>
           </a-form-item>
           <a-form-item name="password">
-            <a-input-password
-              v-model:value="formSchema.password"
-              :placeholder="t('login.passwordPlaceholder')"
-              size="large"
-            >
-              <template #prefix><SvgIcon name="LockOutlined" /></template>
+            <a-input-password v-model:value="formSchema.password" :placeholder="t('login.passwordPlaceholder')"
+              size="large">
+              <template #prefix>
+                <SvgIcon name="LockOutlined" />
+              </template>
             </a-input-password>
           </a-form-item>
           <a-form-item v-if="captcha.captchaEnabled" name="code">
             <a-flex class="gap-2">
-              <a-input
-                v-model:value="formSchema.code"
-                :placeholder="t('login.captchaPlaceholder')"
-                size="large"
-                class="flex-1"
-              >
-                <template #prefix><SvgIcon name="SafetyOutlined" /></template>
+              <a-input v-model:value="formSchema.code" :placeholder="t('login.captchaPlaceholder')" size="large"
+                class="flex-1">
+                <template #prefix>
+                  <SvgIcon name="SafetyOutlined" />
+                </template>
               </a-input>
-              <img
-                v-if="captcha.img"
-                :src="`data:image/png;base64,${captcha.img}`"
-                :alt="t('login.refreshCaptcha')"
-                h-40px
-                w-120px
-                cursor-pointer
-                @click="refreshCaptcha"
-              />
+              <img v-if="captcha.img" :src="`data:image/png;base64,${captcha.img}`" :alt="t('login.refreshCaptcha')"
+                h-40px w-120px cursor-pointer @click="refreshCaptcha" />
             </a-flex>
           </a-form-item>
           <div flex justify="between" mb-4>

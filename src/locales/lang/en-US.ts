@@ -7,6 +7,7 @@ export default {
     username: 'Username',
     password: 'Password',
     captcha: 'Captcha',
+    delete: 'Delete',
   },
   login: {
     title: 'x-admin Admin',
@@ -23,11 +24,28 @@ export default {
     about: 'About',
     profile: 'Profile',
     login: 'Login',
+    todo: 'Todo',
   },
+
   header: {
     toggleSidebar: 'Toggle sidebar',
     toggleTheme: 'Toggle theme',
+    themeColor: 'Theme color',
     language: 'Language',
+  },
+  theme: {
+    light: 'Light',
+    dark: 'Dark',
+    auto: 'Follow system',
+    themes: {
+      default: 'default',
+      cyan: 'cyan',
+      purple: 'purple',
+      carbon: 'carbon',
+      forest: 'forest',
+      redbiz: 'redbiz',
+      custom: 'custom',
+    },
   },
   pages: {
     home: 'This is home page',

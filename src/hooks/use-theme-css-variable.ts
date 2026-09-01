@@ -1,18 +1,6 @@
 import { watch } from 'vue';
 import { usePreferencesStore } from '#/store/modules/preferences';
 
-/**
- * 主题 CSS 变量联动
- *
- * 项目的明暗主题通过 `theme.css` 中的 CSS 变量实现：
- * - 亮色变量定义在 `:root`
- * - 暗色变量定义在 `.dark`（即 `html.dark`）
- *
- * 因此「切换主题」本质上就是同步 `<html>` 元素上的 `dark` 类，
- * 浏览器会自动应用对应的 CSS 变量。本 composable 负责把
- * `preferencesStore.isDark` 与 `html.dark` 类保持同步，
- * 并在运行时切换时加入颜色过渡动画，避免生硬跳变。
- */
 export function useThemeCssVariable() {
   const preferencesStore = usePreferencesStore();
 
@@ -20,14 +8,13 @@ export function useThemeCssVariable() {
   const applyTheme = (isDark: boolean) => {
     const root = document.documentElement;
     root.classList.toggle('dark', isDark);
-    root.dataset.theme = isDark ? 'dark' : 'light';
   };
 
-  /**
-   * 运行时切换主题：先开启过渡，再改 class，过渡结束后移除。
-   * 仅在 html.theme-anim 存在的短暂窗口内对颜色属性做过渡，
-   * 不影响 hover 等常态交互。
-   */
+  function applyThemeColor(value: string) {
+    const root = document.documentElement;
+    root.dataset.theme = value;
+  }
+
   let transitionTimer: ReturnType<typeof setTimeout> | undefined;
   const applyThemeWithTransition = (isDark: boolean) => {
     const root = document.documentElement;
@@ -48,6 +35,12 @@ export function useThemeCssVariable() {
   watch(
     () => preferencesStore.isDark,
     (value) => applyThemeWithTransition(value),
+  );
+
+  watch(
+    () => preferencesStore.theme.color,
+    (value) => applyThemeColor(value),
+    { immediate: true },
   );
 
   return { applyTheme, applyThemeWithTransition };

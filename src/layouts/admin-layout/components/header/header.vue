@@ -7,7 +7,9 @@ import SvgIcon from '#/components/SvgIcon/index.vue'
 import { useLayoutBreadcrumbs } from './use-layout-breadcrumbs'
 import Language from '../widgets/language.vue'
 import Theme from '../widgets/theme.vue'
+import ThemeColor from '../widgets/theme-color.vue'
 import UserDropdown from '../widgets/user-dropdown.vue'
+import { useSystemStore } from '#/store/modules/system.ts'
 
 const preferencesStore = usePreferencesStore()
 const sidebarEnable = computed(() => preferencesStore.sidebar.enable)
@@ -16,14 +18,9 @@ const router = useRouter()
 const { breadcrumbs } = useLayoutBreadcrumbs()
 const { t } = useI18n()
 
-
-
 function toggleSidebarEnable() {
   preferencesStore.sidebar.enable = !sidebarEnable.value
 }
-
-
-
 
 function handleBreadcrumbClick(path?: string) {
   if (path) router.push(path)
@@ -32,7 +29,7 @@ function handleBreadcrumbClick(path?: string) {
 <template>
   <a-layout-header>
     <a-flex align="center" justify="space-between" h-full gap="small">
-      <a-flex align="center" gap="small">
+      <a-flex align="center" gap="small" h-full>
         <a-button type="text" shape="circle" :aria-label="t('header.toggleSidebar')" @click="toggleSidebarEnable">
           <template #icon>
             <SvgIcon :name="sidebarEnable ? 'MenuFoldOutlined' : 'MenuUnfoldOutlined'" />
@@ -47,9 +44,12 @@ function handleBreadcrumbClick(path?: string) {
           </template>
         </a-breadcrumb>
       </a-flex>
-      <a-flex align="center" gap="small">
-        <Language />
-        <Theme />
+      <a-flex gap="small" h-full align="center">
+        <template v-if="!useSystemStore().isXs">
+          <Language />
+          <ThemeColor />
+          <Theme />
+        </template>
         <UserDropdown />
       </a-flex>
     </a-flex>
