@@ -17,7 +17,10 @@ export default defineConfig({
   presets: [
     presetWind3(),
     presetAttributify(),
-    presetIcons(),
+    presetIcons({
+      scale: 1.5,
+      warn: true,
+    }),
     presetTypography(),
     presetWebFonts({
       fonts: {},

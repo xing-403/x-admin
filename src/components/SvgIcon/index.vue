@@ -7,10 +7,14 @@ import AntdIcon, * as AntdIcons from '@antdv-next/icons'
 defineOptions({
   name: 'SvgIcon'
 })
-const props = defineProps<{
-  name: string | Component;
-  color?: string,
-}>();
+const props = withDefaults(defineProps<{
+  name: string | Component
+  size?: string
+  color?: string
+}>(), {
+  size: '1.2em',
+  color: 'currentColor'
+});
 const isAntdIcon = computed(() => isString(props.name) && Reflect.has(AntdIcons, props.name))
 
 const AntdIconComponent = computed(() => {
@@ -25,10 +29,10 @@ const isComponent = computed(() => !isString(props.name) && (isObject(props.name
 
 <template>
   <template v-if="isString(name)">
-    <AntdIcon v-if="isAntdIcon" :component="AntdIconComponent" :style="{ color }" />
-    <img v-else-if="isRemoteIcon" :src="name" v-bind="$attrs" :style="{ color }" />
-    <Icon v-else-if="name" v-bind="$attrs" :icon="name" :style="{ color }" />
+    <AntdIcon v-if="isAntdIcon" :component="AntdIconComponent" :style="{ color, fontSize: size }" />
+    <img v-else-if="isRemoteIcon" :src="name" v-bind="$attrs" :style="{ color, fontSize: size }" />
+    <Icon v-else-if="name" v-bind="$attrs" :icon="name" :style="{ color, fontSize: size }" />
   </template>
-  <component v-else-if="isComponent" :is="name" v-bind="$attrs" :style="{ color }" />
+  <component v-else-if="isComponent" :is="name" v-bind="$attrs" :style="{ color, fontSize: size }" />
 
 </template>

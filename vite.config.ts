@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
           target: proxyTarget,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/dev-api/, ''),
-        },     // 将 /dev-api 代理到 RuoYi-Vue-Plus 后端并去掉前缀
+        }, // 将 /dev-api 代理到 RuoYi-Vue-Plus 后端并去掉前缀
         '/profile': {
           target: proxyTarget,
           changeOrigin: true,

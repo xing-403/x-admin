@@ -29,7 +29,7 @@ function handleBreadcrumbClick(path?: string) {
 <template>
   <a-layout-header>
     <a-flex align="center" justify="space-between" h-full gap="small">
-      <a-flex align="center" gap="small">
+      <a-flex align="center" gap="small" h-full>
         <a-button type="text" shape="circle" :aria-label="t('header.toggleSidebar')" @click="toggleSidebarEnable">
           <template #icon>
             <SvgIcon :name="sidebarEnable ? 'MenuFoldOutlined' : 'MenuUnfoldOutlined'" />
@@ -44,12 +44,12 @@ function handleBreadcrumbClick(path?: string) {
           </template>
         </a-breadcrumb>
       </a-flex>
-      <a-flex gap="small">
-        <a-flex v-if="!useSystemStore().isXs" align="center" gap="small">
+      <a-flex gap="small" h-full align="center">
+        <template v-if="!useSystemStore().isXs">
           <Language />
           <ThemeColor />
           <Theme />
-        </a-flex>
+        </template>
         <UserDropdown />
       </a-flex>
     </a-flex>

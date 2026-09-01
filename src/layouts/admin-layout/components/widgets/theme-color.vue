@@ -19,14 +19,21 @@ const PRESET_COLORS = computed(() => [
   { key: 'redbiz', label: t('theme.themes.redbiz'), color: '#b83333' },
 ]);
 
-function select({ key }: { key: string }) {
+function onCLickMenuItem({ key }: { key: string }) {
   preferencesStore.theme.color = key;
+}
+
+function handleChangeThemeColor() {
+  const currentIndex = PRESET_COLORS.value.findIndex((item) => item.key === current.value);
+  const nextIndex = (currentIndex + 1) % PRESET_COLORS.value.length;
+  preferencesStore.theme.color = PRESET_COLORS.value[nextIndex].key;
 }
 </script>
 
 <template>
-  <a-dropdown placement="bottomRight" :menu="{ items: PRESET_COLORS as unknown as ItemType[], onClick: select }">
-    <a-button type="text" shape="circle" :aria-label="t('header.toggleTheme')">
+  <a-dropdown placement="bottomRight"
+    :menu="{ items: PRESET_COLORS as unknown as ItemType[], onClick: onCLickMenuItem }">
+    <a-button type="text" shape="circle" :aria-label="t('header.toggleTheme')" @click="handleChangeThemeColor">
       <template #icon>
         <SvgIcon name="BgColorsOutlined" />
       </template>

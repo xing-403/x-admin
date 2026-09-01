@@ -133,7 +133,7 @@ function handleClickUserDropDown(info: any) {
       </template>
     </a-avatar>
     <template #popupRender="menu">
-      <div w-220px style="background: var(--base-background);border-radius: 4px ;">
+      <div w-220px b-rd-8px mt-5 style="background: var(--color-primary-30);">
         <a-flex p-3 gap="middle" align="center">
           <a-avatar :size="54" :src="userStore.userInfo?.user?.avatarUrl || undefined">
             <template #icon>

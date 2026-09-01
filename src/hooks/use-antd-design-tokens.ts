@@ -15,6 +15,7 @@ export function useAntdDesignTokens() {
     colorBgContainer: getCssVariableValue('--base-background'),
     colorBgLayout: getCssVariableValue('--page-background'),
     colorText: getCssVariableValue('--text-primary'),
+    colorBgElevated: getCssVariableValue('--color-primary-20'),
   });
 
   const componentToken = reactive({
@@ -35,6 +36,7 @@ export function useAntdDesignTokens() {
       tokens.colorBgContainer = getCssVariableValue('--page-background');
       tokens.colorBgLayout = getCssVariableValue('--page-background');
       tokens.colorText = getCssVariableValue('--text-primary');
+      tokens.colorBgElevated = getCssVariableValue('--color-primary-20');
       componentToken.Layout.siderBg = getCssVariableValue('--base-background');
       componentToken.Layout.headerBg = getCssVariableValue('--base-background');
       componentToken.Layout.footerBg = getCssVariableValue('--base-background');
