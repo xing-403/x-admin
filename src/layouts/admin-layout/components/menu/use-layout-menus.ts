@@ -1,17 +1,9 @@
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router';
 import { adminRoutes } from '#/router/routes';
+import { joinPath } from '#/router/routes/helper';
 import { translate } from '#/locales';
 import type { LayoutMenuItem, LayoutMenuProps } from './type';
-
-/** 拼接父子路由路径 */
-function joinPath(parentPath: string, childPath: string) {
-  if (childPath.startsWith('/')) {
-    return childPath;
-  }
-  const parent = parentPath === '/' ? '' : parentPath;
-  return `${parent}/${childPath}` || '/';
-}
 
 /** 布局根路由：自身不承载页面（无 title），仅用于挂载子路由 */
 function isLayoutRoute(route: RouteRecordRaw) {
