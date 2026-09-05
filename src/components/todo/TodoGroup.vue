@@ -108,7 +108,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <a-card min-w-280px :title="t('todo.groupTitle')" :body-style="{ padding: '5px' }">
+  <a-card min-w-280px :title="t('todo.groupTitle')" :styles="{ body: { padding: '5px' } }">
     <template #extra>
       <a-button type="primary" size="small" @click="openGroupModal()">
         <template #icon>
@@ -118,8 +118,9 @@ onMounted(() => {
       </a-button>
     </template>
     <a-empty v-if="groups.length === 0" :description="t('todo.emptyGroup')" />
-    <a-tree v-else draggable block-node v-model:expanded-keys="expandedKeys" :fieldNames="{ key: 'groupId' }"
-      :tree-data="groups" @drop="handleDrag" @select="handleSelectKey">
+    <a-tree v-else draggable block-node v-model:expanded-keys="expandedKeys"
+      :selected-keys="selectedGroupId ? [selectedGroupId] : []" :fieldNames="{ key: 'groupId' }" :tree-data="groups"
+      @drop="handleDrag" @select="handleSelectKey">
       <template #titleRender="node">
         <a-flex justify="space-between" align="center" gap="small">
           <a-flex flex="1" align="center">
