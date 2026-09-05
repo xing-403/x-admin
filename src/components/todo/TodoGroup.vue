@@ -3,15 +3,8 @@ import { listGroupTree, removeGroups, updateGroup, type TodoGroupVo } from '#/ap
 import { useI18n } from '#/locales';
 import { message } from 'antdv-next';
 import TodoGroupModal from '#/components/todo/actions/TodoGroupModal.vue';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { TreeEmits } from 'antdv-next/dist/tree/Tree';
-
-interface GroupNode {
-  key: string;
-  title: string;
-  data: TodoGroupVo;
-  children?: GroupNode[];
-}
 
 const { t } = useI18n();
 const groups = ref<TodoGroupVo[]>([]);
@@ -26,29 +19,16 @@ const todoGroupModalRef = ref<InstanceType<typeof TodoGroupModal>>();
 function flatten(list: TodoGroupVo[]): TodoGroupVo[] {
   const out: TodoGroupVo[] = [];
   const walk = (l: TodoGroupVo[]) => {
-    for (const g of l ?? []) {
+    for (const g of l) {
       out.push(g);
-      walk(g.children ?? []);
+      if (g.children) {
+        walk(g.children);
+      }
     }
   };
   walk(list);
   return out;
 }
-
-/** 分组树 -> a-tree 数据 */
-function toTreeData(list: TodoGroupVo[]): GroupNode[] {
-  return (list ?? []).map((g) => {
-    const children = toTreeData(g.children ?? []);
-    const node: GroupNode = { key: g.groupId, title: g.groupName, data: g };
-    // 空 children 会让节点多出展开箭头，故仅在有子节点时挂载
-    if (children.length) {
-      node.children = children;
-    }
-    return node;
-  });
-}
-
-const treeData = computed<GroupNode[]>(() => toTreeData(groups.value));
 
 function openGroupModal(g?: TodoGroupVo, parent?: TodoGroupVo | null) {
   todoGroupModalRef.value?.open(g, parent);
@@ -59,23 +39,20 @@ async function deleteGroup(g: TodoGroupVo) {
     message.warning(t('todo.deleteGroupHasChildren'));
     return;
   }
-  try {
-    await removeGroups([g.groupId]);
+  removeGroups([g.groupId]).then(() => {
     message.success(t('todo.save'));
     if (selectedGroupId.value === g.groupId) {
       selectedGroupId.value = null;
     }
-    await loadGroups();
-  } catch {
-    // 拦截器已提示
-  }
+    loadGroups()
+  })
 }
 
 /** 展开指定分组的所有祖先，保证新建的节点可见 */
 function expandAncestors(targetId: string) {
   const path: string[] = [];
   const walk = (l: TodoGroupVo[], ancestors: string[]): boolean => {
-    for (const g of l ?? []) {
+    for (const g of l) {
       if (g.groupId === targetId) {
         path.push(...ancestors);
         return true;
@@ -112,8 +89,8 @@ async function loadGroups(targetId?: string) {
   }
 }
 const handleDrag: TreeEmits['drop'] = (info) => {
-  const group = info.dragNode.data
-  const parentGroup = info.node.data
+  const group = info.dragNode
+  const parentGroup = info.node
   const orderNum = info.dropPosition
   const parentGroupId = (info.dropToGap ? parentGroup.parentGroupId : parentGroup.groupId).toString()
   const { groupId, groupName } = group
@@ -131,7 +108,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <a-card min-w-280px :title="t('todo.groupTitle')">
+  <a-card min-w-280px :title="t('todo.groupTitle')" :body-style="{ padding: '5px' }">
     <template #extra>
       <a-button type="primary" size="small" @click="openGroupModal()">
         <template #icon>
@@ -140,23 +117,24 @@ onMounted(() => {
         {{ t('todo.newGroup') }}
       </a-button>
     </template>
-    <a-empty v-if="treeData.length === 0" :description="t('todo.emptyGroup')" />
-    <a-tree v-else draggable block-node v-model:expanded-keys="expandedKeys" :tree-data="treeData" @drop="handleDrag"
-      @select="handleSelectKey">
+    <a-empty v-if="groups.length === 0" :description="t('todo.emptyGroup')" />
+    <a-tree v-else draggable block-node v-model:expanded-keys="expandedKeys" :fieldNames="{ key: 'groupId' }"
+      :tree-data="groups" @drop="handleDrag" @select="handleSelectKey">
       <template #titleRender="node">
         <a-flex justify="space-between" align="center" gap="small">
           <a-flex flex="1" align="center">
-            <a-typography-text ellipsis>{{ node.title }}</a-typography-text>
+            <a-typography-text ellipsis>{{ node.groupName }}</a-typography-text>
           </a-flex>
           <a-flex>
             <a-tooltip :title="t('todo.editGroup')">
-              <a-button variant="link" color="orange" size="small" @click.stop="openGroupModal(node.data)">
+              <a-button variant="link" color="orange" size="small"
+                @click.stop="openGroupModal(node as unknown as TodoGroupVo)">
                 <template #icon>
                   <SvgIcon name="EditOutlined" />
                 </template>
               </a-button>
             </a-tooltip>
-            <a-popconfirm :title="t('todo.deleteGroupConfirm')" @confirm="deleteGroup(node.data)">
+            <a-popconfirm :title="t('todo.deleteGroupConfirm')" @confirm="deleteGroup(node as unknown as TodoGroupVo)">
               <a-tooltip :title="t('common.delete')">
                 <a-button type="link" size="small" danger @click.stop>
                   <template #icon>
