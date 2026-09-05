@@ -97,7 +97,7 @@ onMounted(() => {
     <a-spin :spinning="itemLoading">
       <a-empty v-if="!itemLoading && items.length === 0" :description="t('todo.emptyItem')" />
       <a-row :gutter="[16, 24]" overflow-auto>
-        <a-col v-for="it in [...items, ...items]" :xs="24" :sm="24" :md="24" :lg="24" :xl="12" :xxl="8">
+        <a-col v-for="it in items" :xs="24" :sm="24" :md="24" :lg="24" :xl="12" :xxl="8">
           <a-card min-w-240px :key="it.todoId">
             <a-descriptions :column="1">
               <template #title>
@@ -106,9 +106,11 @@ onMounted(() => {
                 </a-typography-text>
               </template>
               <template #extra>
-                <a-button @click="toggleStatus(it)" :color="it.status === '0' ? 'default' : 'green'" variant="link">
-                  {{ it.status === '1' ? t('todo.done') : t('todo.undone') }}
-                </a-button>
+                <a-tooltip :title="it.status === '1' ? t('todo.changeUndone') : t('todo.changeDone')">
+                  <a-button @click="toggleStatus(it)" :color="it.status === '0' ? 'default' : 'green'" variant="link">
+                    {{ it.status === '1' ? t('todo.done') : t('todo.undone') }}
+                  </a-button>
+                </a-tooltip>
               </template>
               <a-descriptions-item label="描述">
                 {{ it.todoDesc }}

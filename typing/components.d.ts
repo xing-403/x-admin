@@ -58,6 +58,8 @@ declare module 'vue' {
     ATag: typeof import('antdv-next')['Tag']
     ATextarea: typeof import('antdv-next')['TextArea']
     ATooltip: typeof import('antdv-next')['Tooltip']
+    ATree: typeof import('antdv-next')['Tree']
+    ATreeSelect: typeof import('antdv-next')['TreeSelect']
     ATypographyText: typeof import('antdv-next')['TypographyText']
     ATypographyTitle: typeof import('antdv-next')['TypographyTitle']
     AUpload: typeof import('antdv-next')['Upload']
