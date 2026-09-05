@@ -142,7 +142,7 @@ onUnmounted(() => {
       </div>
     </div>
     <transition name="fade">
-      <div ref="barRef" class="scroll-bar" :class="[(isHover || isDragging) && 'show']">
+      <div ref="barRef" v-if="isOverflow" class="scroll-bar" :class="[(isHover || isDragging) && 'show']">
         <div class="scroll-thumb" :style="{ width: `${thumbWidth}px`, left: `${thumbLeft}px` }"
           @mousedown="handleMouseDownThumb">
         </div>

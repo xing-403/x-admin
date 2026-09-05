@@ -11,6 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AAffix: typeof import('antdv-next')['Affix']
     AApp: typeof import('antdv-next')['App']
     AAvatar: typeof import('antdv-next')['Avatar']
     ABadge: typeof import('antdv-next')['Badge']
@@ -19,6 +20,8 @@ declare module 'vue' {
     ACard: typeof import('antdv-next')['Card']
     ACheckbox: typeof import('antdv-next')['Checkbox']
     AConfigProvider: typeof import('antdv-next')['ConfigProvider']
+    ADescriptions: typeof import('antdv-next')['Descriptions']
+    ADescriptionsItem: typeof import('antdv-next')['DescriptionsItem']
     ADrawer: typeof import('antdv-next')['Drawer']
     ADropdown: typeof import('antdv-next')['Dropdown']
     AFlex: typeof import('antdv-next')['Flex']
@@ -35,16 +38,18 @@ declare module 'vue' {
     AMenu: typeof import('antdv-next')['Menu']
     ARadio: typeof import('antdv-next')['Radio']
     ARadioGroup: typeof import('antdv-next')['RadioGroup']
-    ASelect: typeof import('antdv-next')['Select']
     ASpin: typeof import('antdv-next')['Spin']
     ATabPane: typeof import('antdv-next')['TabPane']
     ATabs: typeof import('antdv-next')['Tabs']
     ATag: typeof import('antdv-next')['Tag']
+    ATooltip: typeof import('antdv-next')['Tooltip']
     ATypographyText: typeof import('antdv-next')['TypographyText']
     AUpload: typeof import('antdv-next')['Upload']
+    Bar: typeof import('./../src/components/Scrollbar/Bar.vue')['default']
     Page: typeof import('./../src/components/page/Page.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Scrollbar: typeof import('./../src/components/Scrollbar/index.vue')['default']
     SvgIcon: typeof import('./../src/components/SvgIcon/index.vue')['default']
   }
 }

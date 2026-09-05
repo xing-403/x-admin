@@ -27,6 +27,14 @@ export default {
     todo: 'Todo',
   },
 
+  tabbar: {
+    more: 'More actions',
+    closeCurrent: 'Close current',
+    closeLeft: 'Close left',
+    closeRight: 'Close right',
+    closeOther: 'Close others',
+    closeAll: 'Close all',
+  },
   header: {
     toggleSidebar: 'Toggle sidebar',
     toggleTheme: 'Toggle theme',

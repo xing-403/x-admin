@@ -26,6 +26,16 @@ export default {
     login: '登录',
     todo: '待办',
   },
+  tabbar: {
+    more: '更多操作',
+    closeCurrent: '关闭当前',
+    closeLeft: '关闭左侧',
+    closeRight: '关闭右侧',
+    closeOther: '关闭其他',
+    closeAll: '关闭全部',
+    affixCurrent: '固定当前',
+    unaffixCurrent: '取消固定',
+  },
   header: {
     toggleSidebar: '显示/隐藏侧边栏',
     toggleTheme: '切换主题',

@@ -16,6 +16,10 @@ export const usePreferencesStore = defineStore(
       /** 是否折叠为图标栏 */
       collapsed: false,
     });
+    const tabbar = reactive({
+      enable: true,
+      showIcon: true,
+    });
 
     const theme = reactive({
       /** 主题模式：light 浅色 / dark 暗色 / auto 跟随系统 */
@@ -54,6 +58,7 @@ export const usePreferencesStore = defineStore(
 
     return {
       sidebar,
+      tabbar,
       theme,
       isDark,
       systemPrefersDark,
