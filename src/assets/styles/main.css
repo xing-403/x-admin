@@ -14,39 +14,24 @@ body {
   overflow: hidden;
 }
 
-/* 主题色链接 */
-a {
-  color: var(--primary);
-  text-decoration: none;
-}
-
-a:hover {
-  opacity: 0.85;
-}
-
-/* 选中态使用主题色 */
-::selection {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-
 /* 滚动条随主题变化 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--color-primary-20);
+  width: 8px;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted-foreground);
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--color-primary-30);
 }
 
 /* 主题切换时的颜色过渡动画，避免明暗切换生硬跳变。

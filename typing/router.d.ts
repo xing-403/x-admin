@@ -10,5 +10,9 @@ declare module 'vue-router' {
     order?: number;
     /** 是否在菜单中隐藏 */
     hideInMenu?: boolean;
+    /** 标签页固定项：不可关闭，且不参与批量关闭（如首页） */
+    affix?: boolean;
+    /** 是否不加入标签栏（如登录页、404） */
+    hideInTabs?: boolean;
   }
 }

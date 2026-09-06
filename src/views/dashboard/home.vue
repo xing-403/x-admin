@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { useI18n } from '#/locales';
+import TodoQuickPanel from '#/components/todo/TodoQuickPanel.vue';
 
-const { t } = useI18n();
 </script>
 
 <template>
-  <Page> {{ t('pages.home') }} </Page>
+  <Page>
+    <TodoQuickPanel />
+  </Page>
 </template>

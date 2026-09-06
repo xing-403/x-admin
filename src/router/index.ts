@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // 初始路由列表。
 import { routes } from './routes';
 import { useUserStore } from '#/store/modules/user';
+import { useTabsStore } from '#/store/modules/tabs';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE),
@@ -17,6 +18,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, _from) => {
   const userStore = useUserStore();
+  const tabsStore = useTabsStore();
   if (userStore.hasToken) {
     // 已登录访问登录页 → 跳首页
     if (to.path === '/login') {
@@ -31,6 +33,7 @@ router.beforeEach(async (to, _from) => {
         return `/login?redirect=${encodeURIComponent(to.fullPath)}`;
       }
     }
+    tabsStore.addTab(to);
     return true;
   }
 

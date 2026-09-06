@@ -34,5 +34,4 @@ const isComponent = computed(() => !isString(props.name) && (isObject(props.name
     <Icon v-else-if="name" v-bind="$attrs" :icon="name" :style="{ color, fontSize: size }" />
   </template>
   <component v-else-if="isComponent" :is="name" v-bind="$attrs" :style="{ color, fontSize: size }" />
-
 </template>

@@ -7,16 +7,19 @@ import request from '#/utils/request';
 export interface TodoGroupVo {
   groupId: string;
   groupName: string;
+  parentGroupId?: string;
   orderNum?: number;
   createBy?: number;
   createByName?: string;
   createTime?: string;
+  children?: TodoGroupVo[];
 }
 
 /** 待办分组表单（新增/编辑） */
 export interface TodoGroupBo {
   groupId?: string;
   groupName: string;
+  parentGroupId?: string;
   orderNum?: number;
 }
 
@@ -45,9 +48,13 @@ export interface TodoItemBo {
 
 const BASE = '/todo';
 
-/** 分组列表 */
+/** 分组列表（平铺） */
 export function listGroups(): Promise<TodoGroupVo[]> {
   return request.get(`${BASE}/group/list`) as unknown as Promise<TodoGroupVo[]>;
+}
+/** 分组树（按 parentGroupId 组装层级） */
+export function listGroupTree(): Promise<TodoGroupVo[]> {
+  return request.get(`${BASE}/group/tree`) as unknown as Promise<TodoGroupVo[]>;
 }
 export function getGroup(id: number): Promise<TodoGroupVo> {
   return request.get(`${BASE}/group/${id}`) as unknown as Promise<TodoGroupVo>;
@@ -64,7 +71,9 @@ export function removeGroups(ids: string[]): Promise<void> {
 
 /** 待办列表（按分组） */
 export function listItems(groupId: string): Promise<TodoItemVo[]> {
-  return request.get(`${BASE}/item/list`, { params: { groupId } }) as unknown as Promise<TodoItemVo[]>;
+  return request.get(`${BASE}/item/list`, { params: { groupId } }) as unknown as Promise<
+    TodoItemVo[]
+  >;
 }
 export function getItem(id: string): Promise<TodoItemVo> {
   return request.get(`${BASE}/item/${id}`) as unknown as Promise<TodoItemVo>;

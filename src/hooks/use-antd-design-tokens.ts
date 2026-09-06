@@ -22,6 +22,7 @@ export function useAntdDesignTokens() {
     Layout: {
       siderBg: getCssVariableValue('--base-background'),
       headerPadding: '0 20px',
+      headerHeight: preferencesStore.tabbar.enable ? 42 : 64,
       headerBg: getCssVariableValue('--base-background'),
       footerBg: getCssVariableValue('--base-background'),
       footerPadding: '10px 20px',
@@ -39,6 +40,7 @@ export function useAntdDesignTokens() {
       tokens.colorBgElevated = getCssVariableValue('--color-primary-20');
       componentToken.Layout.siderBg = getCssVariableValue('--base-background');
       componentToken.Layout.headerBg = getCssVariableValue('--base-background');
+      componentToken.Layout.headerHeight = preferencesStore.tabbar.enable ? 42 : 64;
       componentToken.Layout.footerBg = getCssVariableValue('--base-background');
     },
     { immediate: true },

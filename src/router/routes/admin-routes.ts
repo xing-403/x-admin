@@ -24,6 +24,7 @@ const routes: RouteRecordRaw[] = [
             meta: {
               icon: 'carbon:workspace',
               title: 'workbench',
+              affix: true,
             },
           },
           {
