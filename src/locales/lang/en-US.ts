@@ -8,6 +8,7 @@ export default {
     password: 'Password',
     captcha: 'Captcha',
     delete: 'Delete',
+    backToHome: 'Back To Home',
   },
   login: {
     title: 'x-admin Admin',
@@ -57,6 +58,12 @@ export default {
   pages: {
     home: 'This is home page',
     about: 'This is about page',
+    error: {
+      notFound: {
+        title: 'Oops! Page Not Found',
+        description: "Sorry, we couldn't find the page you were looking for.",
+      },
+    },
   },
   profile: {
     account: 'Account',
