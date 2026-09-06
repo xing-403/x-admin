@@ -121,7 +121,7 @@ export default {
     done: 'Done',
     undone: 'Undone',
     emptyGroup: 'Please select or create a group first',
-    emptyItem: 'No todos yet, click New Todo on the top right',
+    emptyItem: 'No todos yet',
     deleteGroupConfirm: 'Delete this group and all its todos?',
     deleteItemConfirm: 'Delete this todo?',
     deleteGroupHasChildren: 'This group has sub groups, please delete them first',

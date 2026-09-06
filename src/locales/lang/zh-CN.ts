@@ -123,7 +123,7 @@ export default {
     done: '已完成',
     undone: '未完成',
     emptyGroup: '请先选择或创建一个分组',
-    emptyItem: '暂无待办，点击右上角新建',
+    emptyItem: '暂无待办',
     deleteGroupConfirm: '确定删除该分组及其下所有待办吗？',
     deleteItemConfirm: '确定删除该待办吗？',
     deleteGroupHasChildren: '该分组下存在子分组，请先删除子分组',

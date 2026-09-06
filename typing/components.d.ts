@@ -17,6 +17,7 @@ declare module 'vue' {
     ABreadcrumb: typeof import('antdv-next')['Breadcrumb']
     AButton: typeof import('antdv-next')['Button']
     ACard: typeof import('antdv-next')['Card']
+    ACardGrid: typeof import('antdv-next')['CardGrid']
     ACheckbox: typeof import('antdv-next')['Checkbox']
     ACol: typeof import('antdv-next')['Col']
     AConfigProvider: typeof import('antdv-next')['ConfigProvider']
@@ -37,6 +38,7 @@ declare module 'vue' {
     ALayoutFooter: typeof import('antdv-next')['LayoutFooter']
     ALayoutHeader: typeof import('antdv-next')['LayoutHeader']
     ALayoutSider: typeof import('antdv-next')['LayoutSider']
+    AListy: typeof import('antdv-next')['Listy']
     AMenu: typeof import('antdv-next')['Menu']
     AModal: typeof import('antdv-next')['Modal']
     APopconfirm: typeof import('antdv-next')['Popconfirm']
@@ -63,5 +65,6 @@ declare module 'vue' {
     TodoGroupModal: typeof import('./../src/components/todo/actions/TodoGroupModal.vue')['default']
     TodoList: typeof import('./../src/components/todo/TodoList.vue')['default']
     TodoModal: typeof import('./../src/components/todo/actions/TodoModal.vue')['default']
+    TodoQuickPanel: typeof import('./../src/components/todo/TodoQuickPanel.vue')['default']
   }
 }
