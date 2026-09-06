@@ -8,6 +8,7 @@ export default {
     password: '密码',
     captcha: '验证码',
     delete: '删除',
+    backToHome: '返回首页',
   },
   login: {
     title: 'x-admin 后台管理系统',
@@ -59,6 +60,12 @@ export default {
   pages: {
     home: '这是首页',
     about: '这是关于页面',
+    error: {
+      notFound: {
+        title: '哎呀！未找到页面',
+        description: '抱歉，我们无法找到您要找的页面。',
+      },
+    },
   },
   profile: {
     account: '账号',

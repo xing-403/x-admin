@@ -10,5 +10,15 @@ const routes: RouteRecordRaw[] = [
       title: 'login',
     },
   },
+  {
+    name: 'NotFound',
+    path: '/:pathMatch(.*)*',
+    component: () => import('#/views/error/NotFound.vue'),
+    meta: {
+      title: 'NotFound',
+      hideInMenu: true,
+      hideInTabs: true,
+    },
+  },
 ];
 export default routes;
