@@ -54,7 +54,7 @@ function handleRemoveScrollbarRight() {
               :menu="{ items: getTabMenuItems(item as TabsItem) }"
               @menu-click="({ key }) => handleAction(item as TabsItem, key as TabsActionKey)"
               :trigger="['contextmenu']">
-              <a-button :variant="item.key === tabsStore.activeKey ? 'solid' : 'filled'" color="default"
+              <a-button :variant="item.key === tabsStore.activeKey ? 'solid' : 'filled'" color="primary"
                 @click="handleTabClick(item.key)" size="small">
                 <template v-if="preferencesStore.tabbar.showIcon" #icon>
                   <SvgIcon v-if="item.icon" :name="item.icon" size="14px" />

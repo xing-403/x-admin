@@ -1,10 +1,5 @@
-/**
- * 全局请求封装（基于 axios）
- *  - 统一注入 Authorization（Bearer）头
- *  - 自动处理 @ApiEncrypt 响应解密（读取 `encrypt-key` 头）
- *  - 统一解析 RuoYi 的 R 信封：code=200 返回 data，否则抛出错误
- */
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
+import { useRouter, useRoute } from 'vue-router';
 import { message } from 'antdv-next';
 import { encrypt, encryptBase64, encryptWithAes, generateAesKey } from './encrypt';
 
@@ -68,10 +63,20 @@ request.interceptors.response.use(
     return res;
   },
   (error) => {
+    const router = useRouter();
+    const route = useRoute();
     const status = error.response?.status;
     const res = error.response?.data;
     const msg = res?.msg || error.message || '网络异常';
     // 401 未认证：交由调用方/路由守卫处理登出
+    if (status === 401) {
+      router.replace({
+        name: 'Login',
+        query: {
+          redirect: route.fullPath,
+        },
+      });
+    }
     message.error(status === 401 ? '登录已过期，请重新登录' : msg);
     return Promise.reject(error);
   },
