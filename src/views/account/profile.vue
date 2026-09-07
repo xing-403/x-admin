@@ -180,7 +180,22 @@ async function beforeAvatarUpload(file: File) {
   }
   return false;
 }
+type TabKey = 'basic' | 'pwd'
+const activeTabKey = ref<TabKey>('basic')
+const tabList = reactive<{
+  key: TabKey,
+  label: string
+}[]>([{
+  key: 'basic',
+  label: t('profile.basicInfo')
+}, {
+  key: 'pwd',
+  label: t('profile.changePassword')
+}])
+function handleChangeTabKey(key: string) {
+  activeTabKey.value = key as TabKey
 
+}
 onMounted(loadProfile);
 </script>
 
@@ -207,7 +222,7 @@ onMounted(loadProfile);
             <template #title>
               <a-flex align="center" gap="small" justify="center" :vertical="systemStore.isXs">
                 <span>{{ profile?.user.nickName || profile?.user.userName }}</span>
-                <a-tag v-if="profile?.roleGroup" color="blue">{{ profile?.roleGroup }}</a-tag>
+                <a-tag v-if="profile?.roleGroup" color="var(--color-primary)">{{ profile?.roleGroup }}</a-tag>
               </a-flex>
             </template>
             <a-descriptions-item :label="t('profile.account')">
@@ -225,53 +240,49 @@ onMounted(loadProfile);
       </a-card>
 
       <!-- 基本资料 / 修改密码 -->
-      <a-card w-full :loading="loading">
-        <a-tabs>
-          <a-tab-pane key="basic" :tab="t('profile.basicInfo')">
-            <a-form ref="basicFormRef" :model="basicForm" :rules="basicRules" layout="vertical" max-w-480px>
-              <a-form-item :label="t('profile.nickName')" name="nickName">
-                <a-input v-model:value="basicForm.nickName" allow-clear />
-              </a-form-item>
-              <a-form-item :label="t('profile.phone')" name="phoneNumber">
-                <a-input v-model:value="basicForm.phoneNumber" :maxlength="11" allow-clear />
-              </a-form-item>
-              <a-form-item :label="t('profile.email')" name="email">
-                <a-input v-model:value="basicForm.email" allow-clear />
-              </a-form-item>
-              <a-form-item :label="t('profile.gender')" name="gender">
-                <a-radio-group v-model:value="basicForm.gender">
-                  <a-radio v-for="item in genderOptions" :key="item.value" :value="item.value">
-                    {{ item.label }}
-                  </a-radio>
-                </a-radio-group>
-              </a-form-item>
-              <a-form-item>
-                <a-button type="primary" :loading="savingBasic" @click="handleSaveBasic">
-                  {{ t('profile.save') }}
-                </a-button>
-              </a-form-item>
-            </a-form>
-          </a-tab-pane>
-
-          <a-tab-pane key="pwd" :tab="t('profile.changePassword')">
-            <a-form ref="pwdFormRef" :model="pwdForm" :rules="pwdRules" layout="vertical" max-w-480px>
-              <a-form-item :label="t('profile.oldPassword')" name="oldPassword">
-                <a-input-password v-model:value="pwdForm.oldPassword" />
-              </a-form-item>
-              <a-form-item :label="t('profile.newPassword')" name="newPassword">
-                <a-input-password v-model:value="pwdForm.newPassword" />
-              </a-form-item>
-              <a-form-item :label="t('profile.confirmPassword')" name="confirmPassword">
-                <a-input-password v-model:value="pwdForm.confirmPassword" />
-              </a-form-item>
-              <a-form-item>
-                <a-button type="primary" :loading="savingPwd" @click="handleSavePwd">
-                  {{ t('profile.save') }}
-                </a-button>
-              </a-form-item>
-            </a-form>
-          </a-tab-pane>
-        </a-tabs>
+      <a-card w-full :loading="loading" :tab-list="tabList" :active-tab-key="activeTabKey"
+        @tab-change="handleChangeTabKey">
+        <a-form v-if="activeTabKey === 'basic'" ref="basicFormRef" :model="basicForm" :rules="basicRules"
+          layout="vertical" max-w-480px>
+          <a-form-item :label="t('profile.nickName')" name="nickName">
+            <a-input v-model:value="basicForm.nickName" allow-clear />
+          </a-form-item>
+          <a-form-item :label="t('profile.phone')" name="phoneNumber">
+            <a-input v-model:value="basicForm.phoneNumber" :maxlength="11" allow-clear />
+          </a-form-item>
+          <a-form-item :label="t('profile.email')" name="email">
+            <a-input v-model:value="basicForm.email" allow-clear />
+          </a-form-item>
+          <a-form-item :label="t('profile.gender')" name="gender">
+            <a-radio-group v-model:value="basicForm.gender">
+              <a-radio v-for="item in genderOptions" :key="item.value" :value="item.value">
+                {{ item.label }}
+              </a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" :loading="savingBasic" @click="handleSaveBasic">
+              {{ t('profile.save') }}
+            </a-button>
+          </a-form-item>
+        </a-form>
+        <a-form v-if="activeTabKey === 'pwd'" ref="pwdFormRef" :model="pwdForm" :rules="pwdRules" layout="vertical"
+          max-w-480px>
+          <a-form-item :label="t('profile.oldPassword')" name="oldPassword">
+            <a-input-password v-model:value="pwdForm.oldPassword" />
+          </a-form-item>
+          <a-form-item :label="t('profile.newPassword')" name="newPassword">
+            <a-input-password v-model:value="pwdForm.newPassword" />
+          </a-form-item>
+          <a-form-item :label="t('profile.confirmPassword')" name="confirmPassword">
+            <a-input-password v-model:value="pwdForm.confirmPassword" />
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" :loading="savingPwd" @click="handleSavePwd">
+              {{ t('profile.save') }}
+            </a-button>
+          </a-form-item>
+        </a-form>
       </a-card>
     </a-flex>
   </Page>
