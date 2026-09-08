@@ -14,6 +14,9 @@ importers:
       '@vueuse/core':
         specifier: ^14.4.0
         version: 14.4.0(vue@3.5.41(typescript@6.0.3))
+      animate.ts:
+        specifier: ^0.0.6
+        version: 0.0.6
       antdv-next:
         specifier: ^1.5.2
         version: 1.5.2(vue@3.5.41(typescript@6.0.3))
@@ -1001,6 +1004,9 @@ packages:
 
   alien-signals@3.2.1:
     resolution: {integrity: sha512-I8FjmltrfnDFoZedi5CG8DghVYNhzb/Ijluz7tCSJH0xpd0484Kowhbb1XDYOxfJpU1p5wnM2X54dA+IfGyD1g==}
+
+  animate.ts@0.0.6:
+    resolution: {integrity: sha512-l4kgJD3VCX+49f/sYS/1LyTbQAmtNSNp4095zmIbo3RGiEqYiqemYahHBKdLFUckMcP8XSh0fVaDiTBZWHwVag==}
 
   ansis@4.3.1:
     resolution: {integrity: sha512-BJ8/l4R5LRE7hW9WdSuGYrLSHi2ynxeFpDFbH0K/CgNeY/tyhk+vO6TYxXC5r5CpUhNVX310xzPsN/H9lCdfOA==}
@@ -2817,6 +2823,8 @@ snapshots:
       - supports-color
 
   alien-signals@3.2.1: {}
+
+  animate.ts@0.0.6: {}
 
   ansis@4.3.1: {}
 
