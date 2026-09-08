@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from 'vue';
-
+import { onUnmounted, ref } from 'vue';
+import animate from 'animate.ts';
+import easing from "animate.ts/dist/easing.js"
+import { useResizeObserver } from '@vueuse/core';
 interface Props {
   horizontal?: boolean;
 }
@@ -15,7 +17,6 @@ const scrollRef = ref<HTMLDivElement>()
 const isOverflow = ref(false)
 function update() {
   if (!scrollRef.value || !scrollWrapRef.value) return
-
   const viewWidth = scrollRef.value.clientWidth
   const scrollLeft = scrollRef.value.scrollLeft
   const scrollContentWidth = scrollWrapRef.value.clientWidth
@@ -23,18 +24,12 @@ function update() {
     isOverflow.value = false
     thumbWidth.value = 0
     thumbLeft.value = 0
-    return
+  } else {
+    isOverflow.value = true
+    thumbWidth.value = scrollRef.value.clientWidth ** 2 / scrollWrapRef.value.clientWidth
+    thumbLeft.value = scrollLeft / (scrollContentWidth - viewWidth) * (viewWidth - thumbWidth.value)
   }
-  isOverflow.value = true
-
-  thumbWidth.value = scrollRef.value.clientWidth ** 2 / scrollWrapRef.value.clientWidth
-  thumbLeft.value = scrollLeft / (scrollContentWidth - viewWidth) * (viewWidth - thumbWidth.value)
 }
-
-function handleScroll() {
-  update()
-}
-
 const isDragging = ref(false)
 const isHover = ref(false)
 let startMouseX = 0
@@ -67,76 +62,58 @@ function handleMouseDownThumb(e: MouseEvent) {
   document.addEventListener('mousemove', handleMouseMove)
   document.addEventListener('mouseup', handleMouseUp)
 }
-
+function transition(start: number, end: number, callback: (value: number) => void) {
+  return animate({ duration: 200, start, end, easing: easing.easeInOutSine, onStep: callback })
+}
 /**
- * 滚动到指定 left 像素位置
- * @param position 像素值
+ * 滚动位置
+ * @param position
  */
+
+function scrollTo(position: number) {
+  if (!scrollRef.value) return
+  const scrollLeft = scrollRef.value.scrollLeft
+  const viewWidth = scrollRef.value.clientWidth
+  transition(scrollLeft, Math.min(Math.max(0, position), viewWidth), (value: number) => {
+    if (!scrollRef.value) return
+    scrollRef.value.scrollLeft = value
+  })
+}
+
 function scrollLeft(position: number) {
   if (!scrollRef.value) return
   const scrollLeft = scrollRef.value.scrollLeft
-  let d = 0
-  // 200ms 内将滚动条由 scrollLeft 转移到 scrollLeft - position
-  const timer = setInterval(() => {
-    if (d >= position || scrollLeft - d <= 0) {
-      clearInterval(timer)
-    }
-    if (!scrollRef.value) return
-    scrollRef.value.scrollLeft = scrollLeft - d
-    d += position / 20
-  }, 1)
+  const viewWidth = scrollRef.value.clientWidth
+  scrollTo(Math.min(Math.max(0, scrollLeft - position), viewWidth))
 }
 
-/**
- *
- * @param position 像素值
- */
 function scrollRight(position: number) {
   if (!scrollRef.value) return
   const scrollLeft = scrollRef.value.scrollLeft
-  let d = 0
-  // 200ms 内将滚动条由 scrollLeft 转移到 scrollLeft - position
-  const timer = setInterval(() => {
-    if (d >= position || scrollLeft + d >= scrollWrapRef.value!.clientWidth) {
-      clearInterval(timer)
-    }
-    if (!scrollRef.value) return
-    scrollRef.value.scrollLeft = scrollLeft + d
-    d += position / 20
-  }, 1)
+  const viewWidth = scrollRef.value.clientWidth
+  scrollTo(Math.min(Math.max(0, scrollLeft + position), viewWidth))
 }
 
 // 暴露出去给父组件 ref 调用
 defineExpose({
   scrollLeft,
   scrollRight,
+  scrollTo,
   isOverflow
 })
 
-let resizeObserver: ResizeObserver | null = null
-onMounted(() => {
-  nextTick(update)
-  // 监听滚动容器尺寸变化，slot内容改变自动刷新
-  if (scrollWrapRef.value) {
-    resizeObserver = new ResizeObserver(() => {
-      update()
-    })
-    resizeObserver.observe(scrollWrapRef.value)
-  }
-})
+useResizeObserver(scrollRef, update)
+useResizeObserver(scrollRef, update)
 
 onUnmounted(() => {
   document.removeEventListener('mousemove', handleMouseMove)
   document.removeEventListener('mouseup', handleMouseUp)
-  if (resizeObserver) {
-    resizeObserver.disconnect()
-  }
 })
 </script>
 
 <template>
   <div pos-relative class="scrollbar" @mousemove="isHover = true" @mouseleave="isHover = false">
-    <div class="scrollbar-content" ref="scrollRef" @scroll="handleScroll">
+    <div class="scrollbar-content" ref="scrollRef" @scroll="update">
       <div class="scroll-wrap" ref="scrollWrapRef">
         <slot></slot>
       </div>
