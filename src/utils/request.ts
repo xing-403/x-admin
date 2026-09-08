@@ -1,10 +1,16 @@
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
+import axios, {
+  type AxiosInstance,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from 'axios';
 import { useRouter, useRoute } from 'vue-router';
 import { message } from 'antdv-next';
 import { encrypt, encryptBase64, encryptWithAes, generateAesKey } from './encrypt';
+import { useUserStore } from '#/store/modules/user';
 
 const baseURL = import.meta.env.VITE_APP_BASE_API || '';
-
+let isRefreshing = false;
+let pendingRequests: Array<(token: string) => void> = [];
 const request: AxiosInstance = axios.create({
   baseURL,
   timeout: 15000,
@@ -13,23 +19,10 @@ const request: AxiosInstance = axios.create({
     clientid: import.meta.env.VITE_APP_CLIENT_ID,
   },
 });
-
-// 通过模块级变量持有 token，避免与 user store 形成循环依赖
-let authToken = '';
-
-/** 设置/清除全局 Authorization 头（由 user store 调用） */
-export function setAuthToken(token: string) {
-  authToken = token;
-  if (token) {
-    request.defaults.headers['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete request.defaults.headers['Authorization'];
-  }
-}
-
 request.interceptors.request.use((config) => {
-  if (authToken) {
-    config.headers['Authorization'] = `Bearer ${authToken}`;
+  const userStore = useUserStore();
+  if (userStore.token) {
+    config.headers['Authorization'] = `Bearer ${userStore.token}`;
   }
   // FormData 上传：清除显式 Content-Type，让 axios 自动设置为 multipart/form-data（含 boundary）
   if (config.data instanceof FormData) {
@@ -50,12 +43,42 @@ request.interceptors.request.use((config) => {
 });
 
 request.interceptors.response.use(
-  (response: AxiosResponse) => {
+  async (response: AxiosResponse) => {
+    const userStore = useUserStore();
+    const originalConfig = response.config as InternalAxiosRequestConfig;
     const res = response.data;
-    // 标准 R 信封：{ code, msg, data }
     if (res && typeof res === 'object' && 'code' in res) {
       if (res.code === 200) {
         return res.data;
+      } else if (res.code === 401) {
+        if (isRefreshing) {
+          return new Promise((resolve) => {
+            pendingRequests.push((newAccessToken: string) => {
+              originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
+              resolve(axios(originalConfig));
+            });
+          });
+        }
+
+        isRefreshing = true;
+        try {
+          await userStore.refreshToken();
+          const newToken = userStore.token;
+          pendingRequests.forEach((cb) => cb(newToken));
+          pendingRequests = [];
+          originalConfig.headers.Authorization = `Bearer ${newToken}`;
+          return axios(originalConfig);
+        } catch (err) {
+          // refreshToken 本身失效/出错 → 清空用户信息，跳转登录
+          userStore.logout();
+          message.error('登录已过期，请重新登录');
+          // 清空队列
+          pendingRequests.forEach((cb) => cb(''));
+          pendingRequests = [];
+          return Promise.reject(err);
+        } finally {
+          isRefreshing = false;
+        }
       }
       message.error(res.msg || '请求失败');
       return Promise.reject(new Error(res.msg || 'Error'));

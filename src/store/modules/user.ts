@@ -3,20 +3,23 @@ import { computed, ref } from 'vue';
 
 import {
   logout as logoutApi,
+  refreshToken as refreshTokenApi,
   getInfo,
   login as loginApi,
   type LoginParams,
   type UserInfoVo,
 } from '#/api/auth';
-import { setAuthToken } from '#/utils/request';
+import { useLocalStorage } from '@vueuse/core';
 
 export const useUserStore = defineStore('user', () => {
   /** 访问令牌 */
-  const token = ref(localStorage.getItem('access_token'));
+  const token = useLocalStorage<string>('access_token', null);
+  const refresh_token = useLocalStorage<string>('refresh_token', null);
   /** 用户信息（含 roles / permissions） */
   const userInfo = ref<UserInfoVo | null>(null);
 
   const hasToken = computed(() => !!token.value);
+  const hasRefreshToken = computed(() => !!refresh_token.value);
 
   const roles = computed(() => userInfo.value?.roles ?? []);
   const permissions = computed(() => userInfo.value?.permissions ?? []);
@@ -27,14 +30,16 @@ export const useUserStore = defineStore('user', () => {
 
   function setToken(value: string) {
     token.value = value;
-    localStorage.setItem('access_token', value);
-    setAuthToken(value);
+  }
+  function setRefreshToken(value: string) {
+    refresh_token.value = value;
   }
 
   /** 登录：调用接口并保存 token */
   async function login(data: LoginParams) {
     const vo = await loginApi(data);
     setToken(vo.access_token);
+    setRefreshToken(vo.refresh_token);
     return vo;
   }
 
@@ -44,7 +49,13 @@ export const useUserStore = defineStore('user', () => {
     userInfo.value = info;
     return info;
   }
-
+  async function refreshToken() {
+    setToken('');
+    const vo = await refreshTokenApi(refresh_token.value);
+    setToken(vo.access_token);
+    setRefreshToken(vo.refresh_token);
+    return vo;
+  }
   /** 退出登录（先请求后端，再清理本地状态） */
   async function logout() {
     try {
@@ -58,17 +69,21 @@ export const useUserStore = defineStore('user', () => {
   function reset() {
     userInfo.value = null;
     setToken('');
+    setRefreshToken('');
   }
 
   return {
     token,
+    refresh_token,
     userInfo,
     hasToken,
+    hasRefreshToken,
     roles,
     permissions,
     nickname,
     login,
     fetchUserInfo,
+    refreshToken,
     logout,
     reset,
   };

@@ -71,3 +71,12 @@ export function getInfo(): Promise<UserInfoVo> {
 export function logout(): Promise<void> {
   return request.post('/auth/logout') as unknown as Promise<void>;
 }
+
+export function refreshToken(refreshToken: string): Promise<LoginVo> {
+  return request({
+    url: '/auth/refresh',
+    method: 'post',
+    data: { refreshToken, clientId: CLIENT_ID },
+    headers: { isRefresh: 'true' },
+  }) as unknown as Promise<LoginVo>;
+}
