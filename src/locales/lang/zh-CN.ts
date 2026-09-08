@@ -9,6 +9,10 @@ export default {
     captcha: '验证码',
     delete: '删除',
     backToHome: '返回首页',
+    fullscreen: '全屏',
+    unFullscreen: '取消全屏',
+    confirm: '确定',
+    cancel: '取消',
   },
   login: {
     title: 'x-admin 后台管理系统',

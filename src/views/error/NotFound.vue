@@ -26,7 +26,7 @@ function back() {
     <a-typography-text>
       {{ t('pages.error.notFound.description') }}
     </a-typography-text>
-    <a-button @click="back">
+    <a-button @click="back" type="primary">
       <template #icon>
         <ArrowLeftOutlined />
       </template>
