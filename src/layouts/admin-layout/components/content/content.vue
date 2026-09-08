@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import Page from '#/components/page/Page.vue';
 import { useFullscreen } from '@vueuse/core';
-import { ref, useTemplateRef } from 'vue';
+import { ref } from 'vue';
 
-const contentRef = useTemplateRef('contentRef')
-const { isFullscreen, toggle } = useFullscreen(contentRef)
 const scrollContentRef = ref()
+const { isFullscreen, toggle } = useFullscreen(scrollContentRef)
 
 </script>
 
 <template>
-  <a-layout-content ref="contentRef" class="full-content" :style="{ background: 'var(--ant-layout-color-bg-body)' }">
-    <div ref="scrollContentRef" pos-relative max-h-full overflow-auto>
-      <router-view />
+  <a-layout-content class="full-content">
+    <div pos-relative max-h-full overflow-auto ref="scrollContentRef">
+      <Page>
+        <router-view />
+      </Page>
     </div>
     <a-float-button-group shape="square">
       <a-float-button @click="toggle">

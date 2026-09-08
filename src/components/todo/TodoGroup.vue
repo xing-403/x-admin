@@ -108,7 +108,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <a-card min-w-280px :title="t('todo.groupTitle')" :styles="{ body: { padding: '5px' } }">
+  <a-card :title="t('todo.groupTitle')" :styles="{ body: { padding: '5px' } }">
     <template #extra>
       <a-button type="primary" size="small" @click="openGroupModal()">
         <template #icon>

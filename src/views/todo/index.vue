@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import TodoGroup from '#/components/todo/TodoGroup.vue';
 import TodoList from '#/components/todo/TodoList.vue';
-import { useSystemStore } from '#/store/modules/system';
 import { ref } from 'vue';
 
 defineOptions({ name: 'Todo' });
 
-const systemStore = useSystemStore()
 
 const selectGroupId = ref<string | null>(null);
 </script>
 
 <template>
-  <Page>
-    <a-flex gap="small" :vertical="systemStore.isXs || systemStore.isSm">
+  <a-row :gutter="[{ xs: 8, sm: 16, md: 24, lg: 32 }, { xs: 8, sm: 16, md: 24, lg: 32 }]">
+    <a-col :xs="24" :md="12" :lg="8" :xl="6" :span="4">
       <TodoGroup v-model="selectGroupId" />
+    </a-col>
+    <a-col :xs="24" :md="12" :lg="16" :xl="18" :span="20">
       <TodoList :group-id="selectGroupId" />
-    </a-flex>
-  </Page>
+    </a-col>
+  </a-row>
 </template>

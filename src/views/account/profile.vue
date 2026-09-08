@@ -5,7 +5,6 @@ import { message } from 'antdv-next';
 import type { FormInstance, Rule } from 'antdv-next';
 import { useI18n } from '#/locales';
 import { useUserStore } from '#/store/modules/user';
-import { useSystemStore } from '#/store/modules/system';
 import {
   getProfile,
   updatePassword,
@@ -19,7 +18,6 @@ defineOptions({ name: 'Profile' });
 const { t } = useI18n();
 const router = useRouter();
 const userStore = useUserStore();
-const systemStore = useSystemStore()
 
 const loading = ref(false);
 const savingBasic = ref(false);
@@ -200,10 +198,9 @@ onMounted(loadProfile);
 </script>
 
 <template>
-  <Page>
-    <a-flex :vertical="systemStore.isXs" gap="middle">
-      <!-- 用户信息卡 -->
-      <a-card min-w-260px :loading="loading">
+  <a-row :gutter="[{ xs: 8, sm: 16, md: 24, lg: 32 }, { xs: 8, sm: 16, md: 24, lg: 32 }]">
+    <a-col :xs="24" :md="8" :lg="8" :xl="6" :span="4">
+      <a-card :loading="loading">
         <a-flex align="center" gap="large" vertical>
           <a-upload :show-upload-list="false" accept="image/*" :before-upload="beforeAvatarUpload">
             <div class="avatar-uploader">
@@ -220,7 +217,7 @@ onMounted(loadProfile);
           </a-upload>
           <a-descriptions :column="1">
             <template #title>
-              <a-flex align="center" gap="small" justify="center" :vertical="systemStore.isXs">
+              <a-flex align="center" gap="small" justify="center" vertical>
                 <span>{{ profile?.user.nickName || profile?.user.userName }}</span>
                 <a-tag v-if="profile?.roleGroup" color="var(--color-primary)">{{ profile?.roleGroup }}</a-tag>
               </a-flex>
@@ -235,13 +232,11 @@ onMounted(loadProfile);
               {{ profile?.user.loginDate }}
             </a-descriptions-item>
           </a-descriptions>
-
         </a-flex>
       </a-card>
-
-      <!-- 基本资料 / 修改密码 -->
-      <a-card w-full :loading="loading" :tab-list="tabList" :active-tab-key="activeTabKey"
-        @tab-change="handleChangeTabKey">
+    </a-col>
+    <a-col :xs="24" :md="16" :lg="16" :xl="18" :span="20">
+      <a-card :loading="loading" :tab-list="tabList" :active-tab-key="activeTabKey" @tab-change="handleChangeTabKey">
         <a-form v-if="activeTabKey === 'basic'" ref="basicFormRef" :model="basicForm" :rules="basicRules"
           layout="vertical" max-w-480px>
           <a-form-item :label="t('profile.nickName')" name="nickName">
@@ -284,8 +279,8 @@ onMounted(loadProfile);
           </a-form-item>
         </a-form>
       </a-card>
-    </a-flex>
-  </Page>
+    </a-col>
+  </a-row>
 </template>
 
 <style scoped>

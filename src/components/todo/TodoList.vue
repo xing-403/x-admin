@@ -79,7 +79,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <a-card w-full>
+  <a-card>
     <template #title class="panel-header">
       <span>
         {{ t('todo.title') }}
