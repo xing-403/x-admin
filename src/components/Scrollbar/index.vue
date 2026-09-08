@@ -71,9 +71,9 @@ function transition(start: number, end: number, callback: (value: number) => voi
  */
 
 function scrollTo(position: number) {
-  if (!scrollRef.value) return
+  if (!scrollRef.value || !scrollWrapRef.value) return
   const scrollLeft = scrollRef.value.scrollLeft
-  const viewWidth = scrollRef.value.clientWidth
+  const viewWidth = scrollWrapRef.value.clientWidth
   transition(scrollLeft, Math.min(Math.max(0, position), viewWidth), (value: number) => {
     if (!scrollRef.value) return
     scrollRef.value.scrollLeft = value
@@ -81,16 +81,16 @@ function scrollTo(position: number) {
 }
 
 function scrollLeft(position: number) {
-  if (!scrollRef.value) return
+  if (!scrollRef.value || !scrollWrapRef.value) return
   const scrollLeft = scrollRef.value.scrollLeft
-  const viewWidth = scrollRef.value.clientWidth
+  const viewWidth = scrollWrapRef.value.clientWidth
   scrollTo(Math.min(Math.max(0, scrollLeft - position), viewWidth))
 }
 
 function scrollRight(position: number) {
-  if (!scrollRef.value) return
+  if (!scrollRef.value || !scrollWrapRef.value) return
   const scrollLeft = scrollRef.value.scrollLeft
-  const viewWidth = scrollRef.value.clientWidth
+  const viewWidth = scrollWrapRef.value.clientWidth
   scrollTo(Math.min(Math.max(0, scrollLeft + position), viewWidth))
 }
 
