@@ -285,22 +285,11 @@ onMounted(loadProfile);
 
 <style scoped>
 .avatar-uploader {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  border-radius: 50%;
+  @apply relative inline-block cursor-pointer b-rd-full overflow-hidden;
 }
 
 .avatar-uploader-mask {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
-  font-size: 22px;
+  @apply absolute top-0 left-0 w-full h-full flex items-center justify-center bg-dark-100/30 color-white text-22px opacity-0;
   opacity: 0;
   transition: opacity 0.2s ease;
 }

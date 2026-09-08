@@ -15,7 +15,7 @@ export function useAntdDesignTokens() {
     colorBgContainer: getCssVariableValue('--base-background'),
     colorBgLayout: getCssVariableValue('--page-background'),
     colorText: getCssVariableValue('--text-primary'),
-    colorBgElevated: getCssVariableValue('--color-primary-20'),
+    colorBgElevated: getCssVariableValue('--color-background-10'),
   });
 
   const componentToken = reactive({
@@ -34,10 +34,10 @@ export function useAntdDesignTokens() {
     () => [preferencesStore.isDark, preferencesStore.theme.color],
     () => {
       tokens.colorPrimary = getCssVariableValue('--color-primary');
-      tokens.colorBgContainer = getCssVariableValue('--page-background');
+      tokens.colorBgContainer = getCssVariableValue('--base-background');
       tokens.colorBgLayout = getCssVariableValue('--page-background');
       tokens.colorText = getCssVariableValue('--text-primary');
-      tokens.colorBgElevated = getCssVariableValue('--color-primary-20');
+      tokens.colorBgElevated = getCssVariableValue('--color-background-10');
       componentToken.Layout.siderBg = getCssVariableValue('--base-background');
       componentToken.Layout.headerBg = getCssVariableValue('--base-background');
       componentToken.Layout.headerHeight = preferencesStore.tabbar.enable ? 42 : 64;

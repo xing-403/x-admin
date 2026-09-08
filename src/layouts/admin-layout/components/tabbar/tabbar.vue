@@ -15,7 +15,7 @@ const { getTabMenuItems, handleAction } = useTabbar()
 </script>
 
 <template>
-  <a-flex class="layout-tabbar" align="center" gap="small" w-full>
+  <a-flex class="layout-tabbar" align="center" gap="small">
     <div flex-1 overflow-auto>
       <ScrollbarList />
     </div>

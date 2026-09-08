@@ -153,7 +153,7 @@ function handleClickUserDropDown(info: any) {
       </template>
     </a-avatar>
     <template #popupRender="menu">
-      <div w-220px b-rd-8px mt-5 style="background: var(--color-primary-30);">
+      <div class="w-220px b-rd-8px mt-5 bg-[var(--color-background-40)]">
         <a-flex p-3 gap="middle" align="center">
           <a-avatar :size="54" :src="userStore.userInfo?.user?.avatarUrl || undefined">
             <template #icon>
@@ -162,7 +162,7 @@ function handleClickUserDropDown(info: any) {
           </a-avatar>
           <a-flex vertical gap="small">
             <span> {{ userStore.nickname }}</span>
-            <a-tag v-if="userStore.userInfo?.user.roles.length" color="blue">
+            <a-tag v-if="userStore.userInfo?.user.roles.length" color="var(--color-primary)">
               {{ userStore.userInfo?.user.roles[0].roleName }}
             </a-tag>
           </a-flex>

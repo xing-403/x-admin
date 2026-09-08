@@ -9,9 +9,6 @@ import type { TreeEmits } from 'antdv-next/dist/tree/Tree';
 const { t } = useI18n();
 const groups = ref<TodoGroupVo[]>([]);
 const selectedGroupId = defineModel<string | null>({ required: true });
-const expandedKeys = ref<string[]>([]);
-/** 是否已做过首次自动展开 */
-const autoExpanded = ref(false);
 
 const todoGroupModalRef = ref<InstanceType<typeof TodoGroupModal>>();
 
@@ -64,11 +61,6 @@ function expandAncestors(targetId: string) {
     return false;
   };
   walk(groups.value, []);
-  for (const id of path) {
-    if (!expandedKeys.value.includes(id)) {
-      expandedKeys.value = [...expandedKeys.value, id];
-    }
-  }
 }
 
 async function loadGroups(targetId?: string) {
@@ -79,10 +71,6 @@ async function loadGroups(targetId?: string) {
     selectedGroupId.value = all[0].groupId;
   } else if (!find) {
     selectedGroupId.value = null;
-  }
-  if (!autoExpanded.value && all.length) {
-    expandedKeys.value = all.map((item) => item.groupId);
-    autoExpanded.value = true;
   }
   if (targetId) {
     expandAncestors(targetId);
@@ -99,9 +87,19 @@ const handleDrag: TreeEmits['drop'] = (info) => {
     loadGroups()
   })
 }
-
+function handleChangeTodoGroupName(groupId: string, groupName: string) {
+  const group = flatten(groups.value).find(item => item.groupId === groupId)
+  if (group && group.groupName !== groupName) {
+    updateGroup({ groupId, groupName }).then(() => {
+      loadGroups()
+    });
+  }
+}
 function handleSelectKey(keys: any[]) {
-  selectedGroupId.value = keys.length ? keys[0] : null;
+  console.log(keys)
+  if (keys.length) {
+    selectedGroupId.value = keys[0]
+  }
 }
 onMounted(() => {
   loadGroups();
@@ -118,13 +116,15 @@ onMounted(() => {
       </a-button>
     </template>
     <a-empty v-if="groups.length === 0" :description="t('todo.emptyGroup')" />
-    <a-tree v-else draggable block-node v-model:expanded-keys="expandedKeys"
-      :selected-keys="selectedGroupId ? [selectedGroupId] : []" :fieldNames="{ key: 'groupId' }" :tree-data="groups"
-      @drop="handleDrag" @select="handleSelectKey">
+    <a-tree v-else draggable block-node :fieldNames="{ key: 'groupId' }"
+      :selected-keys="selectedGroupId ? [selectedGroupId] : []" :tree-data="groups" @drop="handleDrag"
+      @select="handleSelectKey">
       <template #titleRender="node">
         <a-flex justify="space-between" align="center" gap="small">
           <a-flex flex="1" align="center">
-            <a-typography-text ellipsis>{{ node.groupName }}</a-typography-text>
+            <a-typography-text :editable="{
+              onChange: (value: string) => handleChangeTodoGroupName(node.groupId, value),
+            }">{{ node.groupName }}</a-typography-text>
           </a-flex>
           <a-flex>
             <a-tooltip :title="t('todo.editGroup')">

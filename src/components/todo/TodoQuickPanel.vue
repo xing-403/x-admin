@@ -58,23 +58,20 @@ onMounted(loadGroups);
 </script>
 
 <template>
-  <a-card w-400px min-h-346px :styles="{ body: { padding: '0px' }, header: { padding: '0 10px', margin: '0px' } }"
-    :tab-list="groupTabItems" :active-tab-key="selectedGroupId" :tab-props="{ size: 'medium' }"
-    @tab-change="(key) => selectedGroupId = key">
-    <a-spin :spinning="itemLoading">
-      <a-empty mt-10 v-if="!itemLoading && items.length === 0" :description="t('todo.emptyItem')" />
-      <a-listy :items="items" :row-key="(item: TodoItemVo) => item.todoId" :height="300">
-        <template #itemRender="item">
-          <a-flex gap="small" align="center" justify="space-between">
-            <a-typography-text>
-              {{ item.todoName }}
-            </a-typography-text>
-            <a-switch :checked="item.status" checked-value="1" un-checked-value="0"
-              @change="(checked: boolean) => toggle(item.todoId, checked)" />
-          </a-flex>
-        </template>
-      </a-listy>
-    </a-spin>
-
+  <a-card :loading="itemLoading || groupLoading" h-346px
+    :styles="{ body: { padding: '0px' }, header: { padding: '0 10px' } }" :tab-list="groupTabItems"
+    :active-tab-key="selectedGroupId" :tab-props="{ size: 'medium' }" @tab-change="(key) => selectedGroupId = key">
+    <a-empty mt-10 v-if="!itemLoading && items.length === 0" :description="t('todo.emptyItem')" />
+    <a-listy :items="items" :row-key="(item: TodoItemVo) => item.todoId" :height="300">
+      <template #itemRender="item">
+        <a-flex gap="small" align="center" justify="space-between">
+          <a-typography-text>
+            {{ item.todoName }}
+          </a-typography-text>
+          <a-switch :checked="item.status" checked-value="1" un-checked-value="0"
+            @change="(checked: boolean) => toggle(item.todoId, checked)" />
+        </a-flex>
+      </template>
+    </a-listy>
   </a-card>
 </template>

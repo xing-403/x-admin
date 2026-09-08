@@ -6,7 +6,7 @@
   --page-background: #f2f3f5;
   --base-background: #ffffff;
 
-  --color-primary-10: color-mix(in srgbF, var(--color-primary) 10%, #ffffff);
+  --color-primary-10: color-mix(in srgb, var(--color-primary) 10%, #ffffff);
   --color-primary-20: color-mix(in srgb, var(--color-primary) 20%, #ffffff);
   --color-primary-30: color-mix(in srgb, var(--color-primary) 30%, #ffffff);
   --color-primary-40: color-mix(in srgb, var(--color-primary) 40%, #ffffff);
@@ -16,6 +16,17 @@
   --color-primary-80: color-mix(in srgb, var(--color-primary) 80%, #ffffff);
   --color-primary-90: color-mix(in srgb, var(--color-primary) 90%, #ffffff);
   --color-primary-100: color-mix(in srgb, var(--color-primary) 100%, #ffffff);
+
+  --color-background-10: color-mix(in srgb, var(--base-background) 10%, #ffffff);
+  --color-background-20: color-mix(in srgb, var(--base-background) 20%, #ffffff);
+  --color-background-30: color-mix(in srgb, var(--base-background) 30%, #ffffff);
+  --color-background-40: color-mix(in srgb, var(--base-background) 40%, #ffffff);
+  --color-background-50: color-mix(in srgb, var(--base-background) 50%, #ffffff);
+  --color-background-60: color-mix(in srgb, var(--base-background) 60%, #ffffff);
+  --color-background-70: color-mix(in srgb, var(--base-background) 70%, #ffffff);
+  --color-background-80: color-mix(in srgb, var(--base-background) 80%, #ffffff);
+  --color-background-90: color-mix(in srgb, var(--base-background) 90%, #ffffff);
+  --color-background-100: color-mix(in srgb, var(--base-background) 100%, #ffffff);
 }
 .dark,
 .dark[data-theme='default'] {
@@ -23,6 +34,7 @@
   --text-primary: #e5eaf3;
   --page-background: #0a0a0a;
   --base-background: #141414;
+
   --color-primary-10: color-mix(in srgb, var(--color-primary) 10%, #000000);
   --color-primary-20: color-mix(in srgb, var(--color-primary) 20%, #000000);
   --color-primary-30: color-mix(in srgb, var(--color-primary) 30%, #000000);
@@ -33,6 +45,17 @@
   --color-primary-80: color-mix(in srgb, var(--color-primary) 80%, #000000);
   --color-primary-90: color-mix(in srgb, var(--color-primary) 90%, #000000);
   --color-primary-100: color-mix(in srgb, var(--color-primary) 100%, #000000);
+
+  --color-background-10: color-mix(in srgb, var(--base-background) 10%, #000000);
+  --color-background-20: color-mix(in srgb, var(--base-background) 20%, #000000);
+  --color-background-30: color-mix(in srgb, var(--base-background) 30%, #000000);
+  --color-background-40: color-mix(in srgb, var(--base-background) 40%, #000000);
+  --color-background-50: color-mix(in srgb, var(--base-background) 50%, #000000);
+  --color-background-60: color-mix(in srgb, var(--base-background) 60%, #000000);
+  --color-background-70: color-mix(in srgb, var(--base-background) 70%, #000000);
+  --color-background-80: color-mix(in srgb, var(--base-background) 80%, #000000);
+  --color-background-90: color-mix(in srgb, var(--base-background) 90%, #000000);
+  --color-background-100: color-mix(in srgb, var(--base-background) 100%, #000000);
 }
 
 /* 静谧青灰 */

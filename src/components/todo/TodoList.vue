@@ -79,7 +79,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <a-card>
+  <a-card :loading="itemLoading">
     <template #title class="panel-header">
       <span>
         {{ t('todo.title') }}
@@ -94,50 +94,48 @@ onMounted(() => {
         {{ t('todo.newItem') }}
       </a-button>
     </template>
-    <a-spin :spinning="itemLoading">
-      <a-empty v-if="!itemLoading && items.length === 0" :description="t('todo.emptyItem')" />
-      <a-row :gutter="[16, 24]" overflow-auto>
-        <a-col v-for="it in items" :xs="24" :sm="24" :md="24" :lg="24" :xl="12" :xxl="8">
-          <a-card min-w-240px :key="it.todoId">
-            <a-descriptions :column="1">
-              <template #title>
-                <a-typography-text :delete="it.status === '1'">
-                  {{ it.todoName }}
-                </a-typography-text>
-              </template>
-              <template #extra>
-                <a-tooltip :title="it.status === '1' ? t('todo.changeUndone') : t('todo.changeDone')">
-                  <a-button @click="toggleStatus(it)" :color="it.status === '0' ? 'default' : 'green'" variant="link">
-                    {{ it.status === '1' ? t('todo.done') : t('todo.undone') }}
-                  </a-button>
-                </a-tooltip>
-              </template>
-              <a-descriptions-item label="描述">
-                {{ it.todoDesc }}
-              </a-descriptions-item>
-              <a-descriptions-item label="截至">
-                {{ it.deadline }}
-              </a-descriptions-item>
-            </a-descriptions>
-            <template #actions>
-              <a-button @click="openItemModal(it)" color="orange" variant="link">
-                <template #icon>
-                  <SvgIcon name="EditOutlined" />
-                </template>
-                {{ t('todo.editItem') }}
+    <a-empty v-if="!itemLoading && items.length === 0" :description="t('todo.emptyItem')" />
+    <a-row :gutter="[16, 24]">
+      <a-col v-for="it in items" :key="it.todoId" :xs="24" :sm="24" :md="24" :lg="24" :xl="12" :xxl="8">
+        <a-card>
+          <template #title>
+            <a-typography-text :delete="it.status === '1'">
+              {{ it.todoName }}
+            </a-typography-text>
+          </template>
+          <template #extra>
+            <a-tooltip :title="it.status === '1' ? t('todo.changeUndone') : t('todo.changeDone')">
+              <a-button @click="toggleStatus(it)" :color="it.status === '0' ? 'default' : 'green'" variant="link">
+                {{ it.status === '1' ? t('todo.done') : t('todo.undone') }}
               </a-button>
-              <a-button @click="deleteItem(it)" color="danger" variant="link">
-                <template #icon>
-                  <SvgIcon name="DeleteOutlined" />
-                </template>
-                {{ t('common.delete') }}
-              </a-button>
-            </template>
-          </a-card>
-        </a-col>
+            </a-tooltip>
+          </template>
+          <a-descriptions :column="1">
+            <a-descriptions-item label="描述">
+              {{ it.todoDesc }}
+            </a-descriptions-item>
+            <a-descriptions-item label="截至">
+              {{ it.deadline }}
+            </a-descriptions-item>
+          </a-descriptions>
+          <template #actions>
+            <a-button @click="openItemModal(it)" color="orange" variant="link">
+              <template #icon>
+                <SvgIcon name="EditOutlined" />
+              </template>
+              {{ t('todo.editItem') }}
+            </a-button>
+            <a-button @click="deleteItem(it)" color="danger" variant="link">
+              <template #icon>
+                <SvgIcon name="DeleteOutlined" />
+              </template>
+              {{ t('common.delete') }}
+            </a-button>
+          </template>
+        </a-card>
+      </a-col>
 
-      </a-row>
-    </a-spin>
+    </a-row>
   </a-card>
 
   <DeleteContextHolder></DeleteContextHolder>
