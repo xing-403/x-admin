@@ -7,9 +7,11 @@ import SvgIcon from '#/components/SvgIcon/index.vue'
 import { useLayoutBreadcrumbs } from './use-layout-breadcrumbs'
 import Language from '../widgets/language.vue'
 import Theme from '../widgets/theme.vue'
+import Logout from '../widgets/logout.vue'
 import ThemeColor from '../widgets/theme-color.vue'
 import UserDropdown from '../widgets/user-dropdown.vue'
 import { useSystemStore } from '#/store/modules/system.ts'
+import Fullscreen from '../widgets/fullscreen.vue'
 
 const preferencesStore = usePreferencesStore()
 const sidebarEnable = computed(() => preferencesStore.sidebar.enable)
@@ -46,9 +48,11 @@ function handleBreadcrumbClick(path?: string) {
       </a-flex>
       <a-flex gap="small" h-full align="center">
         <template v-if="!useSystemStore().isXs">
+          <Fullscreen />
           <Language />
           <ThemeColor />
           <Theme />
+          <Logout />
         </template>
         <UserDropdown />
       </a-flex>

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useI18n, type LocaleType } from '#/locales';
 import { useUserStore } from '#/store/modules/user';
-import { IdcardOutlined, LogoutOutlined } from '@antdv-next/icons';
+import { FullscreenExitOutlined, FullscreenOutlined, IdcardOutlined, LogoutOutlined } from '@antdv-next/icons';
 import { computed } from 'vue';
 
 import { useRouter } from 'vue-router';
 import { usePreferencesStore, type ThemeMode } from '#/store/modules/preferences';
 import { useSystemStore } from '#/store/modules/system';
+import { useFullscreen } from '@vueuse/core';
+import { Modal } from 'antdv-next';
 
 const { t } = useI18n()
 const preferencesStore = usePreferencesStore()
@@ -14,9 +16,18 @@ const userStore = useUserStore()
 const systemStore = useSystemStore()
 const router = useRouter()
 
+const { isFullscreen, toggle: fullScreenToggle } = useFullscreen()
+const [modal, ContextHolder] = Modal.useModal()
 async function handleLogout() {
-  await userStore.logout()
-  router.push('/login')
+  modal.confirm({
+    title: t('common.logout'),
+    okText: t('common.confirm'),
+    cancelText: t('common.cancel'),
+    onOk: async () => {
+      await userStore.logout()
+      router.push('/login')
+    }
+  })
 }
 
 function handleProfile() {
@@ -38,6 +49,12 @@ const items = computed(() => {
       key: 'profile',
       icon: IdcardOutlined,
       show: true
+    },
+    {
+      label: isFullscreen.value ? t('common.unFullscreen') : t('common.fullscreen'),
+      key: 'fullscreen',
+      icon: isFullscreen.value ? FullscreenExitOutlined : FullscreenOutlined,
+      show: systemStore.isXs
     },
     {
       key: 'language',
@@ -83,7 +100,7 @@ const items = computed(() => {
       label: t('common.logout'),
       key: 'logout',
       icon: LogoutOutlined,
-      show: true
+      show: systemStore.isXs
     },
   ].filter(item => item.show)
 })
@@ -100,10 +117,9 @@ function handleThemeColor(key: string) {
 function handleThemeMode(key: string) {
   preferencesStore.theme.mode = key as ThemeMode;
 }
+
 function handleClickUserDropDown(info: any) {
-  const { key, keyPath } = info
-  console.log(info)
-  console.log(key)
+  const { keyPath } = info
   switch (keyPath[0]) {
     case 'profile':
       handleProfile()
@@ -120,12 +136,16 @@ function handleClickUserDropDown(info: any) {
     case 'logout':
       handleLogout()
       break
+    case 'fullscreen':
+      fullScreenToggle()
+      break
   }
 }
 
 </script>
 
 <template>
+  <ContextHolder />
   <a-dropdown :menu="{ items, onClick: handleClickUserDropDown }">
     <a-avatar cursor-pointer :src="userStore.userInfo?.user?.avatarUrl || undefined">
       <template #icon>

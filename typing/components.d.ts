@@ -29,6 +29,8 @@ declare module 'vue' {
     AEmpty: typeof import('antdv-next')['Empty']
     AFlex: typeof import('antdv-next')['Flex']
     AFloatBackTop: typeof import('antdv-next')['BackTop']
+    AFloatButton: typeof import('antdv-next')['FloatButton']
+    AFloatButtonGroup: typeof import('antdv-next')['FloatButtonGroup']
     AForm: typeof import('antdv-next')['Form']
     AFormItem: typeof import('antdv-next')['FormItem']
     AImage: typeof import('antdv-next')['Image']

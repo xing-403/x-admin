@@ -9,6 +9,10 @@ export default {
     captcha: 'Captcha',
     delete: 'Delete',
     backToHome: 'Back To Home',
+    fullscreen: 'fullscreen',
+    unFullscreen: 'cancel fullscreen',
+    confirm: 'confirm',
+    cancel: 'cancel',
   },
   login: {
     title: 'x-admin Admin',
